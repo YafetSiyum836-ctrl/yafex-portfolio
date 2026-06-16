@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cleef Coffee Coupon Webapp — Case Study | Yafex Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Rubik:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --orange:#E8570A;--orange-light:#FF7A32;--orange-glow:#FF6B1A;
+  --cream:#F5EFE6;--cream-dark:#EDE3D6;--cream-mid:#F9F4ED;
+  --brown:#2C1A0E;--brown-mid:#4A2E1A;--brown-light:#7A4A2A;
+  --black:#0D0905;--white:#FFFFFF;
+  --gray:#F0E8DE;--gray2:#E2D5C3;--gray3:#B89E88;
+  --text:#1C0F06;--text2:#6B4E38;
+  --noise:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-48px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(48px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.s1{transition-delay:.1s}.s2{transition-delay:.2s}.s3{transition-delay:.3s}.s4{transition-delay:.4s}.s5{transition-delay:.5s}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,9,5,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(232,87,10,.15);padding:0 60px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-img{height:30px;width:auto;display:block}
+.logo-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:600;color:white;letter-spacing:.02em}
+.logo-dot{color:var(--orange)}
+nav{display:flex;align-items:center;gap:26px}
+nav a{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:400;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:white}
+.back-btn{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;color:white;background:var(--orange);padding:9px 20px;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:background .2s}
+.back-btn:hover{background:var(--orange-light)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--black);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(145deg,#2C1A0E 0%,#0D0905 50%,#1A0C04 100%)}
+.hero-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(232,87,10,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(232,87,10,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-150px;right:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(232,87,10,.18) 0%,transparent 65%);animation:pulse 6s ease-in-out infinite}
+.hero-glow2{position:absolute;bottom:-250px;left:-150px;width:550px;height:550px;background:radial-gradient(circle,rgba(122,74,42,.14) 0%,transparent 65%);animation:pulse 8s ease-in-out infinite reverse}
+.hero-steam{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.steam-particle{position:absolute;width:2px;border-radius:50px;background:linear-gradient(to top,rgba(232,87,10,.3),transparent);animation:steam linear infinite}
+.steam-particle:nth-child(1){left:20%;height:120px;animation-duration:4s;animation-delay:0s}
+.steam-particle:nth-child(2){left:40%;height:80px;animation-duration:5s;animation-delay:1s}
+.steam-particle:nth-child(3){left:65%;height:100px;animation-duration:3.5s;animation-delay:.5s}
+.steam-particle:nth-child(4){left:80%;height:70px;animation-duration:4.5s;animation-delay:2s}
+@keyframes steam{0%{transform:translateY(100vh) scaleX(1);opacity:0}20%{opacity:1}80%{opacity:.3}100%{transform:translateY(-200px) scaleX(3);opacity:0}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+.hero-content{position:relative;z-index:2;padding:140px 60px 80px;max-width:1300px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--orange-light);margin-bottom:28px;border:1px solid rgba(232,87,10,.3);padding:7px 16px}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,9vw,124px);font-weight:700;color:white;line-height:.92;letter-spacing:-.02em;margin-bottom:40px;text-transform:uppercase}
+.hero h1 span{color:transparent;-webkit-text-stroke:2px var(--orange)}
+.hero-bar{width:56px;height:3px;background:var(--orange);margin-bottom:32px}
+.hero-meta{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);padding-top:36px;flex-wrap:wrap}
+.meta-item{padding:0 40px 0 0;border-right:1px solid rgba(255,255,255,.07);margin-right:40px;margin-bottom:16px}
+.meta-item:last-child{border-right:none}
+.meta-item label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:8px}
+.meta-item span{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:500;color:white}
+.hero-scroll{position:absolute;bottom:40px;right:60px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.hero-scroll span{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22);writing-mode:vertical-rl}
+.scroll-line{width:1px;height:80px;background:linear-gradient(to bottom,rgba(232,87,10,.9),transparent);animation:scrollanim 2.5s ease-in-out infinite}
+@keyframes scrollanim{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.4)}}
+
+/* HERO IMAGE STRIP */
+.hero-img-strip{position:absolute;right:0;top:0;bottom:0;width:42%;overflow:hidden;z-index:1}
+.hero-img-strip::before{content:'';position:absolute;left:0;top:0;bottom:0;width:200px;background:linear-gradient(to right,var(--black),transparent);z-index:2}
+.hero-img-strip img{width:100%;height:100%;object-fit:cover;opacity:.35;filter:sepia(20%) saturate(1.4)}
+
+/* PROCESS NAV */
+.process-nav{background:rgba(13,9,5,.97);border-bottom:1px solid rgba(232,87,10,.1);position:sticky;top:64px;z-index:90;overflow-x:auto}
+.process-nav::-webkit-scrollbar{height:0}
+.pnav-inner{display:flex;padding:0 60px;min-width:max-content}
+.pnav-inner a{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:16px 20px;text-decoration:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.pnav-inner a:hover,.pnav-inner a.active{color:white;border-bottom-color:var(--orange)}
+
+/* COMMON */
+.stag{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:16px;display:block}
+.stitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5vw,70px);font-weight:700;color:var(--text);line-height:.95;text-transform:uppercase;margin-bottom:40px;letter-spacing:-.01em}
+.stitle span{color:var(--orange)}
+.stitle-white{color:white}
+.stitle-white span{color:var(--orange)}
+.ssub{font-size:16px;font-weight:300;color:var(--text2);line-height:1.85;max-width:640px;margin-bottom:48px}
+.ssub-white{color:rgba(255,255,255,.6)}
+.orange-bar{width:40px;height:3px;background:var(--orange);margin-bottom:24px}
+.wrap{padding:100px 60px;max-width:1200px;margin:0 auto}
+.full-wrap{padding:100px 0}
+.full-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+
+/* OVERVIEW */
+.ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.ov-text p{font-size:16px;font-weight:300;color:var(--text2);line-height:1.9;margin-bottom:28px}
+.ov-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:8px}
+.stat-box{background:var(--black);padding:28px 24px}
+.stat-box:first-child{grid-column:1/-1}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:700;color:var(--orange);line-height:1;margin-bottom:6px}
+.stat-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.ov-right{display:flex;flex-direction:column;gap:0}
+.ov-detail-row{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--gray2)}
+.ov-detail-row:first-child{border-top:1px solid var(--gray2)}
+.ov-detail-icon{width:36px;height:36px;background:var(--orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;margin-top:2px}
+.ov-detail-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray3);margin-bottom:4px}
+.ov-detail-val{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;color:var(--text);text-transform:uppercase}
+.hero-mockup{width:100%;border-radius:0;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.15);margin-top:40px}
+.hero-mockup img{width:100%;display:block}
+
+/* SECTION DIVIDER */
+.sec-divider{height:1px;background:linear-gradient(to right,transparent,var(--gray2),transparent);margin:0 60px}
+
+/* PROBLEM */
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:56px}
+.prob-card{background:var(--black);padding:40px;position:relative;overflow:hidden}
+.prob-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange)}
+.prob-card-num{font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:700;color:rgba(255,255,255,.04);position:absolute;top:16px;right:20px;line-height:1}
+.prob-card h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:16px;letter-spacing:.02em}
+.prob-card p{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.85}
+.affected-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px}
+.affected-item{background:var(--cream-dark);padding:32px 28px}
+.affected-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;margin-bottom:20px}
+.affected-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.affected-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:10px}
+.affected-item p{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* RESEARCH */
+.research-bg{background:var(--black)}
+.comp-table{width:100%;border-collapse:collapse;margin-top:40px}
+.comp-table th{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:14px 20px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.comp-table th:first-child{color:rgba(255,255,255,.5)}
+.comp-table td{padding:16px 20px;font-size:13px;color:rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;line-height:1.6}
+.comp-table td:first-child{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;color:white;text-transform:uppercase}
+.comp-table tr:hover td{background:rgba(232,87,10,.04)}
+.check{color:var(--orange);font-size:14px}
+.cross{color:rgba(255,255,255,.2);font-size:14px}
+
+.interview-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:40px}
+.interview-card{background:rgba(255,255,255,.03);padding:36px;border-left:3px solid var(--orange)}
+.interview-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:4px}
+.interview-role{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-light);margin-bottom:20px}
+.interview-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.interview-card ul li{font-size:13px;color:rgba(255,255,255,.5);padding-left:16px;position:relative;line-height:1.6}
+.interview-card ul li::before{content:'—';position:absolute;left:0;color:var(--orange);font-size:12px}
+
+/* PERSONAS */
+.persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
+.persona-card{background:white;overflow:hidden;box-shadow:0 2px 40px rgba(44,26,14,.08)}
+.persona-head{background:var(--black);padding:28px 32px;display:flex;align-items:center;gap:20px}
+.persona-avatar{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--orange);flex-shrink:0}
+.persona-name{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:white;text-transform:uppercase;line-height:1}
+.persona-role{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px}
+.persona-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ptag{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;background:rgba(232,87,10,.15);color:var(--orange-light);border:1px solid rgba(232,87,10,.2)}
+.persona-body{padding:28px 32px}
+.persona-quote{font-size:14px;font-style:italic;color:var(--text2);margin-bottom:24px;padding-left:16px;border-left:2px solid var(--orange);line-height:1.7}
+.p-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin:20px 0 10px}
+.p-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.p-list li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.5}
+.p-list li::before{content:'→';position:absolute;left:0;color:var(--orange);font-size:11px}
+
+/* DEFINE */
+.goals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:60px}
+.goal-col{padding:36px 32px;background:var(--cream-dark)}
+.goal-col:nth-child(2){background:var(--black)}
+.goal-col:nth-child(2) h3{color:white}
+.goal-col:nth-child(2) ul li{color:rgba(255,255,255,.5)}
+.goal-col:nth-child(2) ul li::before{color:var(--orange)}
+.goal-col h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--orange)}
+.goal-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.goal-col ul li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.55}
+.goal-col ul li::before{content:'→';position:absolute;left:0;color:var(--orange);font-size:11px;top:1px}
+
+.hypo-list{display:flex;flex-direction:column;gap:2px;margin-top:40px}
+.hypo-item{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:center;background:var(--cream-dark);overflow:hidden}
+.hypo-item:nth-child(even){background:var(--gray)}
+.hypo-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.hypo-problem{font-size:14px;color:var(--text);line-height:1.6;padding:28px 28px}
+.hypo-solution{font-size:14px;color:var(--text2);line-height:1.6;padding:28px 28px}
+.hypo-arrow{text-align:center;font-size:22px;color:var(--orange);background:var(--black);height:100%;display:flex;align-items:center;justify-content:center;padding:0 12px}
+
+/* IDEATE */
+.ideate-bg{background:var(--black)}
+.ia-wrap{margin-top:48px;background:rgba(255,255,255,.03);padding:40px;border:1px solid rgba(255,255,255,.06)}
+.ia-wrap img{width:100%;display:block;opacity:.9}
+.wf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px}
+.wf-item{background:rgba(255,255,255,.03);padding:4px}
+.wf-item img{width:100%;display:block;opacity:.85}
+.wf-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:12px 12px 10px;background:rgba(255,255,255,.02);text-align:center}
+
+.layout-decisions{margin-top:56px}
+.layout-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:32px}
+.layout-card{background:rgba(255,255,255,.03);padding:28px 28px;border-left:2px solid rgba(232,87,10,.2);transition:border-color .2s}
+.layout-card:hover{border-left-color:var(--orange)}
+.layout-card h4{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:10px}
+.layout-card p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65}
+
+/* UI DESIGN */
+.design-system{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;margin-top:40px}
+.color-swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.swatch{aspect-ratio:1;position:relative;overflow:hidden;cursor:pointer}
+.swatch-label{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;background:rgba(0,0,0,.6);font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:white;opacity:0;transition:opacity .2s}
+.swatch:hover .swatch-label{opacity:1}
+
+.typo-show{background:var(--black);padding:32px;margin-top:16px}
+.typo-specimen{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:700;color:white;line-height:1;text-transform:uppercase;letter-spacing:-.02em}
+.typo-specimen span{color:var(--orange)}
+.typo-body{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:12px;font-weight:300}
+.typo-name{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-top:16px}
+
+.ui-el-card{background:var(--cream-dark);padding:28px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.ui-el-card.dark{background:var(--black)}
+.ui-elements-grid{display:grid;grid-template-columns:1fr;gap:2px;margin-top:40px}
+.ui-el-box{background:transparent;padding:0;overflow:hidden}
+.ui-el-box img{width:100%;display:block}
+.ui-btn-main{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:12px 24px;background:var(--orange);color:white}
+.ui-btn-secondary{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:11px 24px;background:transparent;color:white;border:1px solid rgba(255,255,255,.2)}
+.ui-input-mock{width:100%;padding:11px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:13px;color:rgba(255,255,255,.5);font-family:'Barlow',sans-serif}
+.ui-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.ui-badge.active{background:rgba(232,87,10,.15);color:var(--orange);border:1px solid rgba(232,87,10,.25)}
+.ui-badge.expired{background:rgba(255,255,255,.04);color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.08)}
+.ui-badge-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* HIFI SCREENS */
+.screens-section{background:var(--black);padding:80px 0}
+.screens-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.screen-full{width:100%;margin-bottom:2px;overflow:hidden;position:relative}
+.screen-full img{width:100%;display:block;transition:transform .5s ease}
+.screen-full:hover img{transform:scale(1.01)}
+.screen-label-wrap{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.screen-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.screen-label-line{flex:1;height:1px;background:rgba(255,255,255,.06)}
+.screen-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px}
+.screen-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:2px}
+.screen-item{overflow:hidden;position:relative;background:rgba(255,255,255,.02)}
+.screen-item img{width:100%;display:block;transition:transform .5s ease}
+.screen-item:hover img{transform:scale(1.02)}
+.screen-caption{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);transform:translateY(100%);transition:transform .3s}
+.screen-item:hover .screen-caption{transform:translateY(0)}
+
+/* USABILITY */
+.usability-bg{background:var(--cream-dark)}
+.method-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:40px}
+.method-card{padding:32px;background:white}
+.method-card h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:16px}
+.method-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.method-card ul li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.6}
+.method-card ul li::before{content:'→';position:absolute;left:0;color:var(--orange);font-size:11px;top:1px}
+
+.findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px}
+.finding-card{padding:32px;background:var(--black)}
+.finding-card h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.finding-card h3.bad{color:white}
+.finding-card h3.good{color:var(--orange)}
+.finding-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.finding-card ul li{font-size:13px;color:rgba(255,255,255,.45);padding-left:16px;position:relative;line-height:1.6}
+.finding-card ul li::before{content:'·';position:absolute;left:4px;color:var(--orange);font-size:16px;line-height:1}
+
+/* OUTCOME */
+.outcome-bg{background:var(--black)}
+.outcome-text{font-size:18px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.9;max-width:680px;margin-bottom:48px}
+.outcome-screen{width:100%;border-radius:0;overflow:hidden;margin-top:48px;position:relative}
+.outcome-screen img{width:100%;display:block}
+.outcome-screen::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(13,9,5,.5));pointer-events:none}
+.proto-wrap{display:flex;gap:16px;margin-top:48px}
+.proto-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;background:var(--orange);color:white;text-decoration:none;transition:background .2s}
+.proto-btn:hover{background:var(--orange-light)}
+.proto-btn-outline{background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
+.proto-btn-outline:hover{background:rgba(255,255,255,.05)}
+
+/* LEARNINGS */
+.learnings-bg{background:var(--cream)}
+.learnings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
+.learning-card{background:var(--cream-dark);padding:36px}
+.learning-card:first-child{background:var(--orange)}
+.learning-card:first-child .learning-num{color:rgba(0,0,0,.15)}
+.learning-card:first-child h3{color:var(--black)}
+.learning-card:first-child p{color:rgba(0,0,0,.65)}
+.learning-num{font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:700;color:var(--gray2);line-height:.8;margin-bottom:24px}
+.learning-card h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:12px}
+.learning-card p{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* FOOTER */
+.footer-cta{background:var(--black);padding:120px 60px;text-align:center;position:relative;overflow:hidden}
+.footer-bg{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);font-family:'Barlow Condensed',sans-serif;font-size:200px;font-weight:700;color:rgba(255,255,255,.015);white-space:nowrap;letter-spacing:.05em;pointer-events:none}
+.footer-cta h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,6vw,84px);font-weight:700;color:white;text-transform:uppercase;line-height:.95;margin-bottom:24px}
+.footer-cta h2 span{color:transparent;-webkit-text-stroke:2px var(--orange)}
+.footer-cta p{font-size:16px;color:rgba(255,255,255,.32);margin-bottom:44px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.7}
+.footer-btn{display:inline-flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:white;background:var(--orange);padding:18px 38px;text-decoration:none;transition:background .2s}
+.footer-btn:hover{background:var(--orange-light)}
+.footer-bottom{margin-top:64px;padding-top:28px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.1em}
+
+/* COFFEE ACCENT DECORATION */
+.coffee-ring{width:120px;height:120px;border-radius:50%;border:8px solid rgba(232,87,10,.07);position:absolute;pointer-events:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  header{padding:0 24px}
+  .hero-content{padding:120px 24px 60px}
+  .hero-img-strip{display:none}
+  .wrap,.full-inner{padding:60px 24px}
+  .ov-grid,.prob-grid,.design-system,.persona-grid,.interview-grid,.findings-grid,.method-grid{grid-template-columns:1fr}
+  .affected-grid,.goals-grid,.wf-grid,.ui-elements-grid,.layout-grid,.learnings-grid{grid-template-columns:1fr 1fr}
+  .screen-grid-3{grid-template-columns:1fr}
+  .hypo-item{grid-template-columns:1fr;padding:20px}
+  .hypo-arrow{display:none}
+  .pnav-inner{padding:0 24px}
+  .footer-cta{padding:80px 24px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  nav{display:none}
+}
+@media(max-width:600px){
+  .affected-grid,.goals-grid,.wf-grid,.learnings-grid{grid-template-columns:1fr}
+  .screen-grid-2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-link" href="../index.html">
+    <svg class="logo-img" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Yafex Studio">
+      <rect width="30" height="30" rx="8" fill="#c8f55a"/>
+      <g transform="translate(5,5)">
+        <path d="M3 15L10 4L17 15H3Z" fill="#0a0a0a" stroke="#0a0a0a" stroke-linejoin="round"/>
+        <circle cx="10" cy="15.5" r="1.5" fill="#0a0a0a"/>
+      </g>
+    </svg>
+    <span class="logo-name">Yafex Studio</span>
+  </a>
+  <nav>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#services">Experience</a>
+    <a href="../index.html#projects">Work</a>
+    <a href="../index.html#contact">Contact</a>
+    <a class="back-btn" href="../index.html#projects">← Portfolio</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-steam">
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+  </div>
+
+  
+  <div class="hero-content">
+    <div class="hero-tag reveal">Case Study No. 02 — UI/UX Design</div>
+    <h1 class="reveal s1">CLEEF<br><span>COFFEE</span><br>WEBAPP</h1>
+    <div class="hero-bar reveal s2"></div>
+    <div class="hero-meta reveal s3">
+      <div class="meta-item">
+        <label>Role</label>
+        <span>UI/UX Designer</span>
+      </div>
+      <div class="meta-item">
+        <label>Domain</label>
+        <span>Web App</span>
+      </div>
+      <div class="meta-item">
+        <label>Duration</label>
+        <span>2 Weeks</span>
+      </div>
+      <div class="meta-item">
+        <label>Tools</label>
+        <span>Figma · Adobe XD</span>
+      </div>
+      <div class="meta-item">
+        <label>Type</label>
+        <span>Small Business</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</div>
+
+<!-- PROCESS NAV -->
+<div class="process-nav">
+  <div class="pnav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#problem">01 Problem</a>
+    <a href="#research">02 Research</a>
+    <a href="#define">03 Define</a>
+    <a href="#ideate">04 Ideate</a>
+    <a href="#uidesign">05 UI Design</a>
+    <a href="#usability">06 Usability</a>
+    <a href="#outcome">07 Outcome</a>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="wrap">
+  <div class="ov-grid">
+    <div class="ov-text">
+      <div class="orange-bar reveal"></div>
+      <span class="stag reveal s1">Project Overview</span>
+      <h2 class="stitle reveal s2">A Coupon<br><span>Platform</span><br>For Coffee</h2>
+      <p class="ssub reveal s3">Cleef Coffee is a small, community-focused coffee business known for its warm atmosphere and fresh brews. To support growth and customer engagement, we designed a web app that allows the business owner to easily create and share digital coupons — making marketing as smooth as their coffee.</p>
+      <p class="ssub reveal s4" style="margin-bottom:0">The platform is designed to help boost foot traffic, reward loyal customers, and simplify promotions — built for non-technical owners who value simplicity over complexity.</p>
+    </div>
+    <div class="ov-right">
+      <div class="ov-detail-row reveal s1">
+        <div>
+          <div class="ov-detail-label">Client</div>
+          <div class="ov-detail-val">Cleef Coffee</div>
+        </div>
+      </div>
+      <div class="ov-detail-row reveal s2">
+        <div>
+          <div class="ov-detail-label">My Role</div>
+          <div class="ov-detail-val">UI/UX Designer — Research → Wireframes → UI → Testing</div>
+        </div>
+      </div>
+      <div class="ov-detail-row reveal s3">
+        <div>
+          <div class="ov-detail-label">Tools Used</div>
+          <div class="ov-detail-val">Figma · Slack · Adobe XD</div>
+        </div>
+      </div>
+      <div class="ov-detail-row reveal s4">
+        <div>
+          <div class="ov-detail-label">Timeline</div>
+          <div class="ov-detail-val">2 Weeks Sprint</div>
+        </div>
+      </div>
+      <div class="ov-stats reveal s5">
+        <div class="stat-box" style="background:var(--orange)">
+          <div class="stat-num" style="color:white">5</div>
+          <div class="stat-label">Usability Test Participants</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Core App Screens</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Share Methods</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"></div>
+
+<!-- PROBLEM STATEMENT -->
+<div id="problem" class="full-wrap" style="background:var(--cream)">
+  <div class="full-inner">
+    <span class="stag reveal">01 — Problem Statement</span>
+    <h2 class="stitle reveal s1">The Challenge<br>We <span>Solved</span></h2>
+
+    <div class="prob-grid">
+      <div class="prob-card reveal s2">
+        <div class="prob-card-num">01</div>
+        <h3>Background</h3>
+        <p>Small business owners often struggle with promoting deals and discounts in a simple, digital way. Many are not highly technical, so creating and sharing professional-looking coupons can feel intimidating. This project explores a digital coupon web app built specifically for owners like Cleef Coffee's — where the process is: log in, create a coupon, preview it, and share it in just a few clicks.</p>
+      </div>
+      <div class="prob-card reveal s3">
+        <div class="prob-card-num">02</div>
+        <h3>The Core Problem</h3>
+        <p>Local cafés, salons, and small shops rely on word of mouth or basic social media posts to attract customers. But designing a coupon that looks professional and distributing it effectively can be frustrating without the right tools. Owners need a simple, step-by-step solution that removes technical barriers while keeping things quick and efficient.</p>
+      </div>
+    </div>
+
+    <div class="affected-grid reveal s4" style="margin-top:2px">
+      <div class="affected-item">
+        <div class="affected-dot"></div>
+        <div class="affected-label">Business Type</div>
+        <div class="affected-title">Local Cafés &amp; Shops</div>
+        <p>Physical small businesses that serve walk-in customers and rely on community connections and local marketing.</p>
+      </div>
+      <div class="affected-item" style="background:var(--black)">
+        <div class="affected-dot" style="background:var(--orange)"></div>
+        <div class="affected-label" style="color:var(--orange-light)">Technical Literacy</div>
+        <div class="affected-title" style="color:white">Basic App Users</div>
+        <p style="color:rgba(255,255,255,.45)">Comfortable with WhatsApp and Facebook, but not with design or marketing tools — needing a guided, intuitive flow.</p>
+      </div>
+      <div class="affected-item">
+        <div class="affected-dot"></div>
+        <div class="affected-label">Distribution</div>
+        <div class="affected-title">Digital &amp; In-Store</div>
+        <p>Coupons shared via messaging apps, social media, or by generating a QR code that can be printed and placed in-store.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div id="research" class="full-wrap research-bg">
+  <div class="full-inner">
+    <span class="stag reveal" style="color:var(--orange-light)">02 — Research</span>
+    <h2 class="stitle stitle-white reveal s1">Insights &amp;<br><span>Evidence</span></h2>
+
+    <p class="ssub ssub-white reveal s2">I compared competitor platforms and conducted interviews with two real small business owners to discover gaps and unmet needs in today's coupon tools.</p>
+
+    <span class="stag reveal" style="margin-top:0;color:var(--orange-light)">Competitive Analysis</span>
+    <table class="comp-table reveal s1">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Target Audience</th>
+          <th>Key Strength</th>
+          <th>Key Weakness</th>
+          <th style="text-align:center">QR Share</th>
+          <th style="text-align:center">Templates</th>
+          <th style="text-align:center">Non-Tech Friendly</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="./Images for the companys/Loyalty.png" alt="Loyalty logo" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"/>Loyalty</td>
+          <td>Physical businesses</td>
+          <td>Works with POS, auto-updates</td>
+          <td>High cost, limited customization</td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+          <td style="text-align:center"><span class="cross">—</span></td>
+          <td style="text-align:center"><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td><img src="./Images for the companys/Shopify.png" alt="Shopify logo" style="width: 70px; height: 20px; vertical-align: middle; margin-right: 8px;"/>Shopify</td>
+          <td>Online stores</td>
+          <td>Built-in promotion tools</td>
+          <td>Platform-locked, complex setup</td>
+          <td style="text-align:center"><span class="cross">—</span></td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+          <td style="text-align:center"><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td><img src="./Images for the companys/Loyverse.png" alt="Loyverse logo" style="width: 28px; height: 28px; vertical-align: middle; margin-right: 8px;"/>Loyverse</td>
+          <td>Micro businesses</td>
+          <td>Free tier, very easy to use</td>
+          <td>Basic design control only</td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+          <td style="text-align:center"><span class="cross">—</span></td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+        </tr>
+        <tr style="background:rgba(232,87,10,.06)">
+          <td style="color:var(--orange)"><img src="./Images for the companys/CLEEF APP Logo.png" alt="Cleef App logo" style="width: 52px; height: 20px; vertical-align: middle; margin-right: 8px;"/>Cleef App</td>
+          <td style="color:rgba(255,255,255,.7)">Coffee shop owners</td>
+          <td style="color:rgba(255,255,255,.7)">Guided creation + share in one flow</td>
+          <td style="color:rgba(255,255,255,.7)">Early stage</td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+          <td style="text-align:center"><span class="check">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <span class="stag reveal" style="margin-top:64px;color:var(--orange-light)">User Interviews</span>
+    <div class="interview-grid reveal s1">
+      <div class="interview-card">
+        <div class="interview-name">Sarah T.</div>
+        <div class="interview-role">Owner — "Bean &amp; Brew" Coffee Shop</div>
+        <ul>
+          <li>Wants a simple way to update menu, events, and announcements without needing a developer</li>
+          <li>Finds current website editors confusing; wants drag-and-drop simplicity</li>
+          <li>Values online ordering and booking tools for customers</li>
+          <li>Needs promotional tools that don't require constant learning or maintenance</li>
+        </ul>
+      </div>
+      <div class="interview-card">
+        <div class="interview-name">Daniel K.</div>
+        <div class="interview-role">Owner — "SparkleCraft" Jewelry Store</div>
+        <ul>
+          <li>Needs an easy-to-manage online store with payment and inventory tracking</li>
+          <li>Wants professional-looking templates without hiring a designer</li>
+          <li>Finds analytics and sales tracking essential but overwhelming in complex platforms</li>
+          <li>Needs integrated analytics without installing extra third-party apps</li>
+        </ul>
+      </div>
+    </div>
+
+    <span class="stag reveal" style="margin-top:64px;color:var(--orange-light)">User Personas</span>
+    <div class="persona-grid reveal s1">
+      <div class="persona-card">
+        <div class="persona-head">
+          <img class="persona-avatar" src="https://framerusercontent.com/images/odS4s7zcnobW9Y7vLyLAcF8TE.jpg" alt="Sarah T." onerror="this.style.background='var(--orange)';this.style.objectFit='unset'"/>
+          <div>
+            <div class="persona-name">Sarah T.</div>
+            <div class="persona-role">Age 32 · Coffee Shop Owner · Mother of one</div>
+            <div class="persona-tags"><span class="ptag">Caring</span><span class="ptag">Community-Focused</span><span class="ptag">Organized</span></div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <p class="persona-quote">"Sarah runs her shop alone. She needs a no-fuss way to attract customers and run promotions — without ever touching a line of code."</p>
+          <div class="p-label">Goals</div>
+          <ul class="p-list">
+            <li>Easily create and share promotions from a simple dashboard</li>
+            <li>Accept online orders and reservations to reduce phone calls</li>
+            <li>Maintain a professional online presence without a developer</li>
+          </ul>
+          <div class="p-label">Frustrations</div>
+          <ul class="p-list">
+            <li>Complex website editors are overwhelming and time-consuming</li>
+            <li>Limited knowledge of web design and promotional tools</li>
+            <li>Wants tools that don't require constant updates or re-learning</li>
+          </ul>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-head">
+          <img class="persona-avatar" src="https://framerusercontent.com/images/1A8q1O27M0Ai8rVIqP5dPVGlM.jpg" alt="Daniel K." onerror="this.style.background='var(--orange)';this.style.objectFit='unset'"/>
+          <div>
+            <div class="persona-name">Daniel K.</div>
+            <div class="persona-role">Age 28 · Jewelry Store Owner · Single</div>
+            <div class="persona-tags"><span class="ptag">Busy</span><span class="ptag">Tech-Savvy</span><span class="ptag">Growth-Minded</span></div>
+          </div>
+        </div>
+        <div class="persona-body">
+          <p class="persona-quote">"Daniel handles production, marketing, and web management alone. He values efficiency and sales data but has no time for technical troubleshooting."</p>
+          <div class="p-label">Goals</div>
+          <ul class="p-list">
+            <li>Manage his online store and promotions with minimal effort</li>
+            <li>Track sales, coupon performance, and customer behavior easily</li>
+            <li>Have a polished, professional digital presence that builds trust</li>
+          </ul>
+          <div class="p-label">Frustrations</div>
+          <ul class="p-list">
+            <li>E-commerce platforms with complicated settings are confusing</li>
+            <li>Lacks time to troubleshoot technical issues on his own</li>
+            <li>Needs integrated analytics without installing extra apps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEFINE -->
+<div id="define" class="full-wrap" style="background:var(--cream)">
+  <div class="full-inner">
+    <span class="stag reveal">03 — Define</span>
+    <h2 class="stitle reveal s1">Project <span>Goals</span></h2>
+    <p class="ssub reveal s2">To create a successful product, we carefully analyzed both user goals and business goals, then combined them into clear project goals — ensuring our design meets real user needs while supporting the business strategy.</p>
+
+    <div class="goals-grid reveal s3">
+      <div class="goal-col">
+        <h3>User Goals</h3>
+        <ul>
+          <li>Create coupons quickly without technical knowledge</li>
+          <li>Track coupon performance in real time</li>
+          <li>Share coupons easily through familiar channels</li>
+          <li>Look professional without hiring a designer</li>
+        </ul>
+      </div>
+      <div class="goal-col">
+        <h3>Project Goals</h3>
+        <ul>
+          <li>Intuitive dashboard with clear "Create Coupon" CTA</li>
+          <li>Analytics dashboard showing views and redemptions</li>
+          <li>Built-in share options: link, QR code, and social media</li>
+          <li>Pre-designed, customizable coupon templates</li>
+        </ul>
+      </div>
+      <div class="goal-col">
+        <h3>Business Goals</h3>
+        <ul>
+          <li>Simplify coupon creation and management for owners</li>
+          <li>Collect business insights to improve promotions</li>
+          <li>Increase customer engagement and foot traffic</li>
+          <li>Build brand reputation through polished digital tools</li>
+        </ul>
+      </div>
+    </div>
+
+    <span class="stag reveal" style="margin-top:0">Problem Statements &amp; Hypotheses</span>
+    <div class="hypo-list reveal s1">
+      <div class="hypo-item">
+        <div class="hypo-problem"><div class="hypo-label">Problem</div>Small business owners struggle to promote their business effectively using digital tools.</div>
+        <div class="hypo-arrow">→</div>
+        <div class="hypo-solution"><div class="hypo-label">Hypothesis</div>If owners have a simple web app to create and share coupons, they'll promote their business more frequently and effectively.</div>
+      </div>
+      <div class="hypo-item">
+        <div class="hypo-problem"><div class="hypo-label">Problem</div>Existing digital tools are either too complex or not designed for local shops and cafés.</div>
+        <div class="hypo-arrow">→</div>
+        <div class="hypo-solution"><div class="hypo-label">Hypothesis</div>If the app includes visual templates and quick sharing options (WhatsApp, QR, link), owners will find it easier to reach customers.</div>
+      </div>
+      <div class="hypo-item">
+        <div class="hypo-problem"><div class="hypo-label">Problem</div>Owners lack visibility into what promotions are performing best and why.</div>
+        <div class="hypo-arrow">→</div>
+        <div class="hypo-solution"><div class="hypo-label">Hypothesis</div>If owners can track coupon performance (views, redemptions, expirations), they will make better marketing decisions over time.</div>
+      </div>
+      <div class="hypo-item">
+        <div class="hypo-problem"><div class="hypo-label">Problem</div>Non-technical business owners need a simpler, guided creation flow.</div>
+        <div class="hypo-arrow">→</div>
+        <div class="hypo-solution"><div class="hypo-label">Hypothesis</div>If the app is visually clean and intuitive, non-technical users will adopt it quickly without extra training or support.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IDEATE -->
+<div id="ideate" class="full-wrap ideate-bg">
+  <div class="full-inner">
+    <span class="stag reveal" style="color:var(--orange-light)">04 — Ideate</span>
+    <h2 class="stitle stitle-white reveal s1">Architecture<br>&amp; <span>Wireframes</span></h2>
+    <p class="ssub ssub-white reveal s2">A simple structure designed for small business owners. From login to dashboard, users can easily create, share, and track coupons through four main sections — organized for quick access and clarity.</p>
+
+    <span class="stag reveal" style="color:var(--orange-light)">Information Architecture</span>
+    <div class="ia-wrap reveal s1" style="background:#FBF7F0;padding:32px;overflow-x:auto">
+      <svg viewBox="0 0 970 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Space Grotesk',sans-serif">
+      <rect x="20" y="12" width="210" height="42" fill="#E8570A"/>
+      <text x="125" y="39" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" letter-spacing="0.5">CLEEF COFFEE APP</text>
+      <line x1="70" y1="54" x2="70" y2="430" stroke="#7A4A2A" stroke-width="2"/>
+      <line x1="70" y1="110" x2="100" y2="110" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="90" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="114" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Authentication</text>
+      <line x1="260" y1="110" x2="784" y2="110" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="94" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="114" text-anchor="middle" fill="#6B4E38" font-size="9">Sign Up</text>
+      <rect x="460" y="94" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="114" text-anchor="middle" fill="#6B4E38" font-size="9">Log In</text>
+      <rect x="628" y="94" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="114" text-anchor="middle" fill="#6B4E38" font-size="9">Forgot Password</text>
+      <line x1="70" y1="174" x2="100" y2="174" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="154" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="178" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Dashboard</text>
+      <line x1="260" y1="174" x2="784" y2="174" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="158" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="178" text-anchor="middle" fill="#6B4E38" font-size="9">Active Coupons</text>
+      <rect x="460" y="158" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="178" text-anchor="middle" fill="#6B4E38" font-size="9">Performance Cards</text>
+      <rect x="628" y="158" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="178" text-anchor="middle" fill="#6B4E38" font-size="9">Quick Create CTA</text>
+      <line x1="70" y1="238" x2="100" y2="238" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="218" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="242" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Create Coupon</text>
+      <line x1="260" y1="238" x2="784" y2="238" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="222" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="242" text-anchor="middle" fill="#6B4E38" font-size="9">Coupon Details</text>
+      <rect x="460" y="222" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="242" text-anchor="middle" fill="#6B4E38" font-size="9">Discount &amp; Expiry</text>
+      <rect x="628" y="222" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="242" text-anchor="middle" fill="#6B4E38" font-size="9">Live Preview</text>
+      <line x1="70" y1="302" x2="100" y2="302" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="282" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="306" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Share Coupon</text>
+      <line x1="260" y1="302" x2="784" y2="302" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="286" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="306" text-anchor="middle" fill="#6B4E38" font-size="9">QR Code</text>
+      <rect x="460" y="286" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="306" text-anchor="middle" fill="#6B4E38" font-size="9">WhatsApp</text>
+      <rect x="628" y="286" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="306" text-anchor="middle" fill="#6B4E38" font-size="9">Direct Link</text>
+      <line x1="70" y1="366" x2="100" y2="366" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="346" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="370" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Analytics &amp; History</text>
+      <line x1="260" y1="366" x2="784" y2="366" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="350" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="370" text-anchor="middle" fill="#6B4E38" font-size="9">Coupon History</text>
+      <rect x="460" y="350" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="370" text-anchor="middle" fill="#6B4E38" font-size="9">Redemption Rate</text>
+      <rect x="628" y="350" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="370" text-anchor="middle" fill="#6B4E38" font-size="9">Performance Trends</text>
+      <line x1="70" y1="430" x2="100" y2="430" stroke="#7A4A2A" stroke-width="2"/>
+      <rect x="100" y="410" width="160" height="40" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="180" y="434" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Settings</text>
+      <line x1="260" y1="430" x2="784" y2="430" stroke="#B89E88" stroke-width="1.5"/>
+      <rect x="292" y="414" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="370" y="434" text-anchor="middle" fill="#6B4E38" font-size="9">Business Profile</text>
+      <rect x="460" y="414" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="538" y="434" text-anchor="middle" fill="#6B4E38" font-size="9">Account Settings</text>
+      <rect x="628" y="414" width="156" height="32" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1"/>
+      <text x="706" y="434" text-anchor="middle" fill="#6B4E38" font-size="9">Preferences</text>
+      <rect x="20" y="464" width="24" height="18" fill="#E8570A"/><text x="52" y="478" fill="#6B4E38" font-size="11">Root</text>
+      <rect x="120" y="464" width="24" height="18" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/><text x="152" y="478" fill="#6B4E38" font-size="11">Primary section</text>
+      <rect x="300" y="464" width="24" height="18" fill="#F5EFE6" stroke="#E2D5C3"/><text x="332" y="478" fill="#6B4E38" font-size="11">Sub-screen</text>
+      </svg>
+    </div>
+
+    <span class="stag reveal" style="margin-top:56px;color:var(--orange-light)">User Flow</span>
+    <p class="ssub ssub-white reveal s1" style="margin-bottom:24px">Users sign up or log in, create a coupon, preview it, then share it through multiple channels. Afterwards, they track performance in Analytics and History — making the whole process fast, guided, and effortless.</p>
+    <div class="ia-wrap reveal s2" style="background:#FBF7F0;padding:32px;overflow-x:auto">
+      <svg viewBox="0 0 1080 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Space Grotesk',sans-serif">
+      <defs>
+      <marker id="cs3-arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9C7B5E"/></marker>
+      <marker id="cs3-alt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8570A"/></marker>
+      </defs>
+      <line x1="210" y1="77" x2="300" y2="77" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="470" y1="77" x2="560" y2="77" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="730" y1="77" x2="820" y2="77" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <text x="738" y="69" fill="#5a3a22" font-size="11" font-weight="600">Yes</text>
+      <line x1="645" y1="104" x2="645" y2="175" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <text x="653" y="157" fill="#5a3a22" font-size="11" font-weight="600">No</text>
+      <polyline points="560,202 385,202 385,104" fill="none" stroke="#E8570A" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#cs3-alt)"/>
+      <line x1="905" y1="104" x2="905" y2="330" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="820" y1="357" x2="730" y2="357" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="560" y1="357" x2="470" y2="357" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="300" y1="357" x2="210" y2="357" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="125" y1="384" x2="125" y2="460" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <text x="133" y="442" fill="#5a3a22" font-size="11" font-weight="600">Yes</text>
+      <polyline points="125,330 125,300 645,300 645,330" fill="none" stroke="#E8570A" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#cs3-alt)"/>
+      <text x="133" y="318" fill="#5a3a22" font-size="11" font-weight="600">No</text>
+      <line x1="210" y1="487" x2="300" y2="487" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="470" y1="487" x2="560" y2="487" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <line x1="730" y1="487" x2="820" y2="487" stroke="#9C7B5E" stroke-width="2" marker-end="url(#cs3-arr)"/>
+      <rect x="40" y="50" width="170" height="54" fill="#E8570A"/>
+      <text x="125" y="81" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Start</text>
+      <rect x="300" y="50" width="170" height="54" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="385" y="81" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Auth Screen</text>
+      <rect x="560" y="50" width="170" height="54" fill="#ffffff" stroke="#E8570A" stroke-width="2"/>
+      <text x="645" y="81" text-anchor="middle" fill="#E8570A" font-size="11" font-weight="700">Login Valid?</text>
+      <rect x="820" y="50" width="170" height="54" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="905" y="81" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Dashboard</text>
+      <rect x="560" y="175" width="170" height="54" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1.5"/>
+      <text x="645" y="206" text-anchor="middle" fill="#6B4E38" font-size="11" font-weight="400">Error Message</text>
+      <rect x="820" y="330" width="170" height="54" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="905" y="361" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Create Coupon</text>
+      <rect x="560" y="330" width="170" height="54" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1.5"/>
+      <text x="645" y="361" text-anchor="middle" fill="#6B4E38" font-size="11" font-weight="400">Fill Details</text>
+      <rect x="300" y="330" width="170" height="54" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1.5"/>
+      <text x="385" y="361" text-anchor="middle" fill="#6B4E38" font-size="11" font-weight="400">Live Preview</text>
+      <rect x="40" y="330" width="170" height="54" fill="#ffffff" stroke="#E8570A" stroke-width="2"/>
+      <text x="125" y="361" text-anchor="middle" fill="#E8570A" font-size="11" font-weight="700">Approve?</text>
+      <rect x="40" y="460" width="170" height="54" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="125" y="491" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Share Coupon</text>
+      <rect x="300" y="460" width="170" height="54" fill="#F5EFE6" stroke="#E2D5C3" stroke-width="1.5"/>
+      <text x="385" y="491" text-anchor="middle" fill="#6B4E38" font-size="11" font-weight="400">Share Channels</text>
+      <rect x="560" y="460" width="170" height="54" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/>
+      <text x="645" y="491" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Analytics &amp; History</text>
+      <rect x="820" y="460" width="170" height="54" fill="#E8570A"/>
+      <text x="905" y="491" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">End</text>
+      <text x="385" y="530" text-anchor="middle" fill="#6B4E38" font-size="9">QR Code · WhatsApp · Direct Link</text>
+      <rect x="40" y="545" width="24" height="16" fill="#E8570A"/><text x="72" y="558" fill="#6B4E38" font-size="11">Start / End</text>
+      <rect x="200" y="545" width="24" height="16" fill="#2C1A0E" stroke="#E8570A" stroke-width="1.5"/><text x="232" y="558" fill="#6B4E38" font-size="11">Page / Section</text>
+      <rect x="390" y="545" width="24" height="16" fill="#F5EFE6" stroke="#E2D5C3"/><text x="422" y="558" fill="#6B4E38" font-size="11">User action</text>
+      <rect x="560" y="545" width="24" height="16" fill="#fff" stroke="#E8570A" stroke-width="2"/><text x="592" y="558" fill="#6B4E38" font-size="11">Decision</text>
+      <line x1="710" y1="553" x2="755" y2="553" stroke="#E8570A" stroke-width="2" stroke-dasharray="7 5"/><text x="762" y="558" fill="#6B4E38" font-size="11">Alternative path</text>
+      </svg>
+    </div>
+
+    <span class="stag reveal" style="margin-top:56px;color:var(--orange-light)">Wireframes</span>
+    <p class="ssub ssub-white reveal s1" style="margin-bottom:32px">The wireframes outline the main user journey — from signing in to managing coupons. Each screen focuses on simplicity: a clean dashboard, clear form sections, easy sharing options, and a history view for tracking.</p>
+    <div class="wf-grid reveal s2">
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/5Y7sf8SlA70ZY6bN5xqO8cm5yA.png" alt="Login Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Log In Screen</div>
+      </div>
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/sQz0gTxs60TvmSmy1TYdtd76Hzo.png" alt="Dashboard Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Dashboard</div>
+      </div>
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/OyqPKEiwNoZu8i52kStwpHgdQ.png" alt="Create Coupon Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Create Coupon</div>
+      </div>
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/FltEhcH3Lytpw1yfGZTm6pcIFE4.png" alt="Preview Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Coupon Preview</div>
+      </div>
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/NDi8xjNV4fQpdsEW9Z8mJSN34.png" alt="Share Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Share Coupon</div>
+      </div>
+      <div class="wf-item">
+        <img src="https://framerusercontent.com/images/e6bYiUm6BrummOPVoV2Os8wfgA.png" alt="History Wireframe" onerror="this.style.display='none'"/>
+        <div class="wf-label">Coupon History</div>
+      </div>
+    </div>
+
+    <div class="layout-decisions">
+      <span class="stag reveal" style="color:var(--orange-light)">Layout Decisions</span>
+      <p class="ssub ssub-white reveal s1" style="margin-bottom:32px">A brief overview of how each page's layout was planned based on UX research, user behavior, and content priority.</p>
+      <div class="layout-grid reveal s2">
+        <div class="layout-card">
+          <h4>Log In &amp; Sign In Pages</h4>
+          <p>Centered single-column layout to reduce cognitive load. Only essential fields visible — no distractions. Brand logo and warm tone to create trust from first interaction.</p>
+        </div>
+        <div class="layout-card">
+          <h4>Dashboard Page</h4>
+          <p>Left sidebar navigation for persistent access. Top area shows performance summary cards. Main content area highlights active coupons with prominent "Create Coupon" CTA.</p>
+        </div>
+        <div class="layout-card">
+          <h4>Create Coupon Page</h4>
+          <p>Step-by-step form layout with only essential fields: name, discount, expiry. Live preview panel on the right updates in real time, giving owners confidence before sharing.</p>
+        </div>
+        <div class="layout-card">
+          <h4>Share &amp; History Pages</h4>
+          <p>Share options presented as clear, tappable cards: QR code, WhatsApp, direct link. History page uses a table view sorted by recency with quick-access performance metrics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UI DESIGN -->
+<div id="uidesign" class="full-wrap" style="background:var(--cream)">
+  <div class="full-inner">
+    <span class="stag reveal">05 — UI Design</span>
+    <h2 class="stitle reveal s1">Design<br><span>System</span></h2>
+    <p class="ssub reveal s2">The UI is built to feel warm, modern, and welcoming — reflecting the cozy vibe of a small coffee shop. The design uses soft cream tones, rounded thinking, and a simple layout to help users quickly navigate and focus on creating and sharing coupons.</p>
+
+    <div class="design-system reveal s3">
+      <div>
+        <span class="stag" style="margin-bottom:12px">Color Palette</span>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:24px;max-width:720px">Instead of pure white, I chose a soft cream background to reduce harsh blue-light glare. The palette combines warm brown tones with coffee-inspired orange accents to make users feel the brand essence of a cozy café.</p>
+        <div class="color-swatches">
+          <div class="swatch" style="background:#E8570A"><div class="swatch-label">Orange #E8570A</div></div>
+          <div class="swatch" style="background:#FF7A32"><div class="swatch-label">Orange Lt #FF7A32</div></div>
+          <div class="swatch" style="background:#2C1A0E"><div class="swatch-label">Brown #2C1A0E</div></div>
+          <div class="swatch" style="background:#F5EFE6"><div class="swatch-label">Cream #F5EFE6</div></div>
+          <div class="swatch" style="background:#0D0905;border:1px solid rgba(255,255,255,.1)"><div class="swatch-label">Black #0D0905</div></div>
+        </div>
+        <div class="color-swatches" style="margin-top:4px">
+          <div class="swatch" style="background:#7A4A2A"><div class="swatch-label">Brown Md #7A4A2A</div></div>
+          <div class="swatch" style="background:#EDE3D6"><div class="swatch-label">Cream Dk #EDE3D6</div></div>
+          <div class="swatch" style="background:#B89E88"><div class="swatch-label">Warm Gray</div></div>
+          <div class="swatch" style="background:#F9F4ED"><div class="swatch-label">Cream Lt #F9F4ED</div></div>
+          <div class="swatch" style="background:#6B4E38"><div class="swatch-label">Text #6B4E38</div></div>
+        </div>
+      </div>
+      <div>
+        <span class="stag" style="margin-bottom:12px">Typography</span>
+        <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:20px;max-width:720px">The Rubik font was chosen for its clean and approachable look — friendly and modern, making it easier for business owners to read and interact with content without visual distraction.</p>
+        <div style="background:var(--black);border:1px solid rgba(232,87,10,.12);padding:32px 36px">
+
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px">Font Name —
+            <span style="color:var(--orange-light);font-weight:600">Rubik</span>
+          </div>
+
+          <div style="height:1px;background:rgba(255,255,255,.07);margin-bottom:28px"></div>
+
+          <!-- Type scale rows -->
+          <style>
+            .ts3-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+            .ts3-row:last-child{border-bottom:none}
+            .ts3-meta{font-family:'Space Grotesk',sans-serif;font-size:10px;color:rgba(255,255,255,.35);white-space:nowrap;min-width:170px}
+            .ts3-spec{font-family:'Rubik',sans-serif;text-align:left}
+          </style>
+
+          <div class="ts3-row">
+            <div class="ts3-meta">H1 · Rubik Bold 43px</div>
+            <div class="ts3-spec" style="font-size:43px;font-weight:700;color:white;line-height:1.1">H1 — Rubik Bold 43px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">H2 · Rubik Semi Bold 37px</div>
+            <div class="ts3-spec" style="font-size:37px;font-weight:600;color:white;line-height:1.1">H2 — Rubik Semi Bold 37px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">H3 · Rubik Semi Bold 32px</div>
+            <div class="ts3-spec" style="font-size:32px;font-weight:600;color:white">H3 — Rubik Semi Bold 32px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">H4 · Rubik Bold 28px</div>
+            <div class="ts3-spec" style="font-size:28px;font-weight:700;color:white">H4 — Rubik Bold 28px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">H5 · Rubik Medium 24px</div>
+            <div class="ts3-spec" style="font-size:24px;font-weight:500;color:rgba(255,255,255,.9)">H5 — Rubik Medium 24px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">Title 1 · Rubik Medium 21px</div>
+            <div class="ts3-spec" style="font-size:21px;font-weight:500;color:rgba(255,255,255,.85)">Title 1 — Rubik Medium 21px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">Title 2 · Rubik Regular 18px</div>
+            <div class="ts3-spec" style="font-size:18px;font-weight:400;color:rgba(255,255,255,.8)">Title 2 — Rubik Regular 18px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">Body 1 · Rubik Regular 16px</div>
+            <div class="ts3-spec" style="font-size:16px;font-weight:400;color:rgba(255,255,255,.7)">Body 1 — Rubik Regular 16px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">Body 2 · Rubik Regular 14px</div>
+            <div class="ts3-spec" style="font-size:14px;font-weight:400;color:rgba(255,255,255,.55)">Body 2 — Rubik Regular 14px</div>
+          </div>
+          <div class="ts3-row">
+            <div class="ts3-meta">Caption · Rubik Regular 12px</div>
+            <div class="ts3-spec" style="font-size:12px;font-weight:400;color:rgba(255,255,255,.4)">Caption — Rubik Regular 12px</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="stag reveal" style="margin-top:56px">UI Elements</span>
+    <p class="ssub reveal s1" style="margin-bottom:32px">The UI elements are designed to feel intuitive and familiar — clean buttons, sidebar navigation for quick access, and CTA sections that guide users toward key actions like creating or sharing coupons.</p>
+    <div class="ui-elements-grid reveal s2">
+      <div class="ui-el-box"><img src="Images/ui-elements.png" alt="UI Elements" onerror="this.style.display='none'"/></div>
+    </div>
+  </div>
+</div>
+
+<!-- HIGH-FIDELITY SCREENS -->
+<div class="screens-section">
+  <div class="screens-inner">
+    <span class="stag reveal" style="color:var(--orange-light)">High-Fidelity Screens</span>
+    <h2 class="stitle stitle-white reveal s1">Final <span>UI</span><br>Screens</h2>
+    <p class="ssub ssub-white reveal s2" style="margin-bottom:56px">These screens represent the final visual design of the web app, combining both UI and UX decisions into a polished product — crafted to guide coffee shop owners through a smooth and intuitive journey.</p>
+
+    <div class="screen-label-wrap reveal">
+      <span class="screen-label">Log In &amp; Sign In</span>
+      <div class="screen-label-line"></div>
+    </div>
+    <div class="screen-grid-2 reveal s1">
+      <div class="screen-item">
+        <img src="https://framerusercontent.com/images/UGXUKmBzMTK5fYNsGidmVtu22HU.png" alt="Login Screen" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='300px'"/>
+        <div class="screen-caption">Log In — Secure entry for returning users</div>
+      </div>
+      <div class="screen-item">
+        <img src="https://framerusercontent.com/images/atJPeImV4hkhA5FjGT7cFJY33BA.png" alt="Sign In Screen" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='300px'"/>
+        <div class="screen-caption">Sign In — Onboard new owners in under a minute</div>
+      </div>
+    </div>
+
+    <div class="screen-label-wrap reveal" style="margin-top:2px">
+      <span class="screen-label">Dashboard</span>
+      <div class="screen-label-line"></div>
+    </div>
+    <div class="screen-full reveal s1">
+      <img src="https://framerusercontent.com/images/5rBaz4LfD2gupfIOpGbWROeJek.png" alt="Dashboard" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='400px'"/>
+    </div>
+
+    <div class="screen-label-wrap reveal" style="margin-top:2px">
+      <span class="screen-label">Create &amp; Share</span>
+      <div class="screen-label-line"></div>
+    </div>
+    <div class="screen-grid-2 reveal s1">
+      <div class="screen-item">
+        <img src="https://framerusercontent.com/images/hGPBijt0I2dGxPH5Ity5Px7wAbE.png" alt="Create Coupon" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='300px'"/>
+        <div class="screen-caption">Create Coupon — Guided step-by-step form</div>
+      </div>
+      <div class="screen-item">
+        <img src="https://framerusercontent.com/images/CQ7Za19EwBbozHzR8ixAheMkJ0.png" alt="Share Coupon" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='300px'"/>
+        <div class="screen-caption">Share Coupon — QR, WhatsApp, or direct link</div>
+      </div>
+    </div>
+
+    <div class="screen-label-wrap reveal" style="margin-top:2px">
+      <span class="screen-label">Coupon History</span>
+      <div class="screen-label-line"></div>
+    </div>
+    <div class="screen-full reveal s1">
+      <img src="https://framerusercontent.com/images/eENI3z1wjGWrE4gsTSCONgX90.png" alt="Coupon History" onerror="this.style.background='rgba(255,255,255,.04)';this.style.minHeight='300px'"/>
+    </div>
+  </div>
+</div>
+
+<!-- USABILITY TEST -->
+<div id="usability" class="full-wrap usability-bg">
+  <div class="full-inner">
+    <span class="stag reveal">06 — Usability Testing</span>
+    <h2 class="stitle reveal s1">Testing &amp;<br><span>Iterations</span></h2>
+    <p class="ssub reveal s2">The primary objective was to evaluate how easily small business owners — especially those with little technical experience — could navigate and accomplish key tasks within the app.</p>
+
+    <div class="method-grid reveal s3">
+      <div class="method-card">
+        <h3>Test Setup</h3>
+        <ul>
+          <li>5 participants — coffee shop owners and small business operators</li>
+          <li>Remote moderated test using the Figma prototype</li>
+          <li>Conducted in a natural environment at each participant's own pace</li>
+          <li>Simulated a typical small business workflow on laptop</li>
+        </ul>
+      </div>
+      <div class="method-card">
+        <h3>Tasks Given</h3>
+        <ul>
+          <li>Log into the web app as a returning user</li>
+          <li>Create a 15% discount coupon with an expiry date</li>
+          <li>Share the coupon via a QR code to a customer</li>
+          <li>Check the analytics dashboard or coupon history</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="findings-grid reveal s4">
+      <div class="finding-card">
+        <h3 class="bad">⚠ Key Findings</h3>
+        <ul>
+          <li>3 out of 5 users didn't immediately notice the "Create Coupon" button — it wasn't visually distinct enough on the dashboard</li>
+          <li>2 users were unsure where to find coupon performance data for previously created coupons</li>
+          <li>All users enjoyed the warm color palette but suggested action buttons should stand out more prominently</li>
+          <li>Some users hesitated at the sharing step, unsure which option to choose first</li>
+        </ul>
+      </div>
+      <div class="finding-card">
+        <h3 class="good">✓ Improvements Made</h3>
+        <ul>
+          <li>Enlarged the primary CTA button and added a descriptive label: "+ Create New Coupon"</li>
+          <li>Added a shortcut "History" button on the dashboard for faster access to past coupons</li>
+          <li>Improved contrast between action buttons and background to increase visual visibility</li>
+          <li>Added step indicators and tooltips during form completion to reduce hesitation and confusion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div id="outcome" class="full-wrap outcome-bg">
+  <div class="full-inner">
+    <span class="stag reveal" style="color:var(--orange-light)">07 — Final Outcome</span>
+    <h2 class="stitle stitle-white reveal s1">The <span>Result</span></h2>
+    <p class="outcome-text reveal s2">After several rounds of planning, designing, and refining, the coffee coupon web app evolved into a simple yet powerful tool for shop owners. The final design makes it easy to create, customize, and share coupons in just a few steps — all from a clean, intuitive dashboard. Built with the owner's needs in mind, the experience feels efficient and user-friendly, helping businesses grow customer loyalty without any extra effort.</p>
+
+    <div class="proto-wrap reveal s4">
+      <a class="proto-btn" href="https://www.figma.com/proto/iFAsd98UzsAoHszGjXnW4y/Cleef-Coffee-Coupon-Webapp?node-id=2184-10312&t=DwdCSHrpyUlQcwDg-1" target="_blank">View Full Prototype →</a>
+    </div>
+  </div>
+</div>
+
+<!-- KEY LEARNINGS -->
+<div class="full-wrap learnings-bg">
+  <div class="full-inner">
+    <span class="stag reveal">Reflections</span>
+    <h2 class="stitle reveal s1">Key <span>Learnings</span></h2>
+    <div class="learnings-grid reveal s2">
+      <div class="learning-card">
+        <div class="learning-num">01</div>
+        <h3>Simplicity Is Strategy</h3>
+        <p>Removing unnecessary steps and options isn't lazy design — it's the right call for non-technical users. Every removed friction point became a conversion win.</p>
+      </div>
+      <div class="learning-card">
+        <div class="learning-num">02</div>
+        <h3>Brand Tone Drives Adoption</h3>
+        <p>The warm cream-and-orange palette wasn't just aesthetic. It made owners feel comfortable — like the app understood their world, not just their workflow.</p>
+      </div>
+      <div class="learning-card">
+        <div class="learning-num">03</div>
+        <h3>Test Early, Test Often</h3>
+        <p>Usability testing revealed critical CTA visibility issues that prototyping alone missed. Real users in real context caught things no design review could predict.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-cta">
+  <div class="footer-bg">YAFEX</div>
+  <h2 class="reveal">Like What<br>You <span>See?</span></h2>
+  <p class="reveal s1">Explore more work on my portfolio or get in touch — I'd love to collaborate on your next project.</p>
+  <a class="footer-btn reveal s2" href="../index.html">← Back to Portfolio</a>
+  <div class="footer-bottom reveal s3">
+    <div class="footer-copy">© 2024 Yafex Studio · UI/UX Design</div>
+    <div class="footer-copy">Cleef Coffee Coupon Webapp — Case Study No.02</div>
+  </div>
+</div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -48px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+
+const navLinks = document.querySelectorAll('.pnav-inner a');
+['overview','problem','research','define','ideate','uidesign','usability','outcome'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector('.pnav-inner a[href="#' + id + '"]');
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2 }).observe(el);
+});
+</script>
+</body>
+</html>

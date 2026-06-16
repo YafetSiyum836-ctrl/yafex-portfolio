@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DailyLoop — Website Case Study | Yafex Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#A8E100;
+  --green-dark:#7aaa00;
+  --green-mid:#bef030;
+  --white:#FFFFFF;
+  --black:#000000;
+  --gray:#f5f7f2;
+  --gray2:#e8eedc;
+  --gray3:#a0b080;
+  --text:#111a00;
+  --text2:#4a5640;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-48px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(48px);transition:opacity .8s ease,transform .8s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.s1{transition-delay:.1s}.s2{transition-delay:.2s}.s3{transition-delay:.3s}.s4{transition-delay:.4s}.s5{transition-delay:.5s}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(168,225,0,0.1);padding:0 60px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-img{height:30px;width:auto;display:block}
+.logo-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:600;color:white;letter-spacing:.02em}
+nav{display:flex;align-items:center;gap:26px}
+nav a{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:400;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:white}
+.back-btn{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;color:var(--black);background:var(--green);padding:9px 20px;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:background .2s}
+.back-btn:hover{background:var(--green-mid)}
+
+/* PROCESS NAV */
+.process-nav{background:rgba(0,0,0,.97);border-bottom:1px solid rgba(168,225,0,0.08);overflow-x:auto}
+.process-nav.visible{transform:translateY(0)!important;opacity:1!important}
+.process-nav::-webkit-scrollbar{height:0}
+.pnav-inner{display:flex;padding:0 60px;min-width:max-content}
+.pnav-inner a{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:16px 20px;text-decoration:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.pnav-inner a:hover,.pnav-inner a.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* FEAT YES/NO */
+.feat-yes{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(168,225,0,.12);color:var(--green-dark);font-size:12px;font-weight:700}
+.feat-no{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.05);color:#ccc;font-size:11px;font-weight:700}
+.comp-name-cell{display:flex;align-items:center;gap:10px}
+.comp-logo-dl{width:32px;height:32px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--black);flex-shrink:0}
+.comp-logo-other{width:32px;height:32px;border-radius:8px;background:var(--gray2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--text2);flex-shrink:0}
+.comp-logo-img{width:44px;height:44px;object-fit:contain;flex-shrink:0;display:block}
+.comp-logo-img.framed{border-radius:8px;object-fit:cover;background:white;border:1px solid var(--gray2)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--black);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a1a00 0%,#000 55%,#091200 100%)}
+.hero-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,225,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(168,225,0,.05) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-200px;right:-200px;width:800px;height:800px;background:radial-gradient(circle,rgba(168,225,0,.15) 0%,transparent 65%);animation:pulse 5s ease-in-out infinite}
+.hero-glow2{position:absolute;bottom:-300px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(168,225,0,.07) 0%,transparent 65%);animation:pulse 7s ease-in-out infinite reverse}
+.hero-steam{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.steam-particle{position:absolute;width:2px;border-radius:50px;background:linear-gradient(to top,rgba(168,225,0,.3),transparent);animation:steam linear infinite}
+.steam-particle:nth-child(1){left:20%;height:120px;animation-duration:4s;animation-delay:0s}
+.steam-particle:nth-child(2){left:40%;height:80px;animation-duration:5s;animation-delay:1s}
+.steam-particle:nth-child(3){left:65%;height:100px;animation-duration:3.5s;animation-delay:.5s}
+.steam-particle:nth-child(4){left:80%;height:70px;animation-duration:4.5s;animation-delay:2s}
+@keyframes steam{0%{transform:translateY(100vh) scaleX(1);opacity:0}20%{opacity:1}80%{opacity:.3}100%{transform:translateY(-200px) scaleX(3);opacity:0}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+.hero-content{position:relative;z-index:2;padding:140px 60px 80px;max-width:1300px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:28px;border:1px solid rgba(168,225,0,.25);padding:7px 16px}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,9vw,124px);font-weight:700;color:white;line-height:.92;letter-spacing:-.02em;margin-bottom:40px;text-transform:uppercase}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--green)}
+.hero-bar{width:56px;height:3px;background:var(--green);margin-bottom:32px}
+.hero-meta{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);padding-top:36px;flex-wrap:wrap}
+.meta-item{padding:0 40px 0 0;border-right:1px solid rgba(255,255,255,.07);margin-right:40px;margin-bottom:16px}
+.meta-item:last-child{border-right:none}
+.meta-item label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:8px}
+.meta-item span{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:500;color:white}
+.hero-scroll{position:absolute;bottom:40px;right:60px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.hero-scroll span{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22);writing-mode:vertical-rl}
+.scroll-line{width:1px;height:80px;background:linear-gradient(to bottom,rgba(168,225,0,.9),transparent);animation:scrollanim 2.5s ease-in-out infinite}
+@keyframes scrollanim{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.4)}}
+
+/* COMMON */
+.stag{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--green-dark);margin-bottom:16px;display:block}
+.stitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5vw,70px);font-weight:700;color:var(--text);line-height:.95;text-transform:uppercase;margin-bottom:40px;letter-spacing:-.01em}
+.stitle span{color:var(--green-dark)}
+.ssub{font-size:16px;font-weight:300;color:var(--text2);line-height:1.85;max-width:640px;margin-bottom:48px}
+.green-bar{width:40px;height:3px;background:var(--green);margin-bottom:24px}
+.wrap{padding:100px 60px;max-width:1200px;margin:0 auto}
+.full-wrap{padding:100px 0}
+.full-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+
+/* OVERVIEW */
+.ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.ov-text h2{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:700;color:var(--text);text-transform:uppercase;line-height:1;margin-bottom:18px}
+.ov-text p{font-size:15px;color:var(--text2);line-height:1.9;margin-bottom:18px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray2);margin-top:36px}
+.stat{background:white;padding:26px 18px;text-align:center}
+.stat .num{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:700;color:var(--green-dark);display:block;line-height:1}
+.stat .lbl{font-size:10px;color:var(--text2);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+.ov-right{background:var(--gray);padding:36px;border-top:4px solid var(--green)}
+.ov-right-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--gray2)}
+.ov-kv{display:flex;flex-direction:column;gap:0}
+.ov-kv-row{padding:14px 0;border-bottom:1px solid var(--gray2);display:grid;grid-template-columns:120px 1fr;gap:12px}
+.ov-kv-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray3);padding-top:3px}
+.ov-kv-val{font-size:14px;color:var(--text);font-weight:500;line-height:1.5}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+.tag{font-family:'Space Grotesk',sans-serif;font-size:10px;padding:4px 10px;background:rgba(168,225,0,.12);color:var(--green-dark);border:1px solid rgba(168,225,0,.25);letter-spacing:.04em}
+
+/* PROBLEM */
+.prob-section{background:var(--black);padding:100px 0}
+.prob-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.prob-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.04);margin-bottom:2px}
+.prob-card{background:#080a05;padding:44px;border-top:3px solid transparent;transition:border-color .3s}
+.prob-card:hover{border-top-color:var(--green)}
+.prob-card h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:600;color:white;text-transform:uppercase;margin-bottom:16px}
+.prob-card p{font-size:15px;color:rgba(255,255,255,.44);line-height:1.85}
+.affected-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,.04)}
+.aff-item{background:#080a05;padding:28px 32px;display:flex;align-items:flex-start;gap:16px;transition:background .2s}
+.aff-item:hover{background:#0d120a}
+.aff-num{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:700;color:rgba(168,225,0,.35);line-height:1;min-width:50px}
+.aff-text{font-size:14px;color:rgba(255,255,255,.44);line-height:1.75;padding-top:8px}
+
+/* RESEARCH */
+.comp-table{width:100%;border-collapse:collapse;margin-bottom:60px}
+.comp-table th{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:white;background:var(--black);padding:16px 20px;text-align:left}
+.comp-table td{padding:14px 20px;font-size:14px;color:var(--text2);border-bottom:1px solid var(--gray2);background:white;vertical-align:middle}
+.comp-table tr:hover td{background:var(--gray)}
+.comp-name-text{font-weight:600;color:var(--text);font-size:14px}
+.insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray2);margin-bottom:60px}
+.insight-card{background:white;padding:36px;border-top:3px solid var(--green)}
+.insight-card h4{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:12px}
+.insight-card p{font-size:14px;color:var(--text2);line-height:1.75}
+.int-block{background:white;padding:44px;margin-bottom:2px;border-left:3px solid var(--green)}
+.int-block h3{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:20px}
+.int-source{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:32px;padding-left:16px;border-left:3px solid var(--green)}
+.int-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.int-col h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-dark);margin-bottom:16px}
+.int-list{list-style:none}
+.int-list li{font-size:14px;color:var(--text2);padding:8px 0;border-bottom:1px solid var(--gray);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.int-list li::before{content:"→";color:var(--green-dark);font-weight:600;flex-shrink:0}
+
+/* DEFINE */
+.goals-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray2);margin-bottom:64px}
+.goal-card{background:white;padding:32px;border-top:3px solid var(--green)}
+.goal-card h4{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:10px}
+.goal-card p{font-size:14px;color:var(--text2);line-height:1.75}
+.diagram-card{background:white;padding:32px;overflow-x:auto;border:1px solid var(--gray2)}
+
+/* KEY FEATURES MAP */
+.fmap{background:var(--gray);border:1px solid var(--gray2);padding:48px 40px;overflow-x:auto}
+.fmap-root{display:flex;justify-content:center;margin-bottom:14px}
+.fmap-root-node{background:var(--black);color:white;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:16px 34px;border-bottom:4px solid var(--green);text-align:center;line-height:1}
+.fmap-root-node span{display:block;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:500;letter-spacing:.2em;color:var(--green);margin-top:7px}
+.fmap-stem{width:2px;height:26px;background:var(--gray3);margin:0 auto}
+.fmap-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:680px}
+.fmap-col{display:flex;flex-direction:column}
+.fmap-pillar{background:white;border-top:3px solid var(--green);padding:18px 20px;text-align:center;margin-bottom:16px}
+.fmap-pillar .fmap-pnum{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--green-dark);display:block;margin-bottom:7px}
+.fmap-pillar h4{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;color:var(--text);text-transform:uppercase;line-height:1.05}
+.fmap-items{display:flex;flex-direction:column;gap:10px}
+.fmap-item{background:white;border:1px solid var(--gray2);border-left:3px solid var(--green);padding:14px 16px}
+.fmap-item strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.01em;margin-bottom:3px}
+.fmap-item span{font-size:12.5px;color:var(--text2);line-height:1.55}
+@media(max-width:780px){.fmap{padding:32px 20px}.fmap-cols{grid-template-columns:1fr;min-width:0;gap:16px}}
+
+/* STRUCTURE / IDEATE */
+.ideate-outer{background:white;padding:100px 0}
+.ideate-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.phase-block{background:var(--gray);padding:48px;margin-bottom:2px;overflow:hidden}
+.phase-block h3{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:14px}
+.phase-block p{font-size:15px;color:var(--text2);line-height:1.85;max-width:700px;margin-bottom:28px}
+.diagram-wrap{background:white;padding:32px;overflow-x:auto}
+.stage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--gray2)}
+.stage-card{background:white;padding:30px 26px;position:relative}
+.stage-num{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--green-dark);letter-spacing:.1em;margin-bottom:10px}
+.stage-card h4{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:16px;padding-bottom:14px;border-bottom:3px solid var(--green)}
+.stage-card ul{list-style:none}
+.stage-card li{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--gray);line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.stage-card li::before{content:"·";color:var(--green-dark);font-size:20px;line-height:.9;flex-shrink:0}
+.stage-arrow{display:none;position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:24px;height:24px;align-items:center;justify-content:center;background:var(--green);border-radius:50%;color:var(--black);font-size:12px;font-weight:700;z-index:2}
+.stage-card:not(:last-child) .stage-arrow{display:flex}
+
+/* UI DESIGN / DESIGN SYSTEM */
+.ds-outer{background:var(--black);padding:100px 0}
+.ds-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.ds-block{margin-bottom:64px}
+.ds-block-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:600;color:white;text-transform:uppercase;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:28px;letter-spacing:.02em}
+.ds-desc{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;max-width:640px;margin-bottom:24px}
+.color-row{display:flex;gap:0;background:rgba(255,255,255,.04);overflow:hidden}
+.color-swatch{flex:1;height:120px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;position:relative;cursor:default;transition:flex .3s ease}
+.color-swatch:hover{flex:2}
+.color-swatch .cs-hex{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em}
+.color-swatch .cs-name{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin-top:3px}
+.type-rows{display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.04)}
+.type-row{background:#060a00;padding:24px 32px;display:flex;align-items:center;gap:32px;transition:background .2s}
+.type-row:hover{background:#0c1200}
+.type-meta{font-family:'Space Grotesk',sans-serif;font-size:10px;color:rgba(255,255,255,.3);min-width:180px;line-height:1.6}
+.ui-elements-grid{display:grid;grid-template-columns:1fr;gap:2px;background:rgba(255,255,255,.04)}
+.ui-el-box{background:#060a00;padding:36px}
+.ui-el-box h4{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:24px}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn-primary{background:var(--green);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border:none;cursor:default}
+.btn-outlined{background:transparent;color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border:2px solid var(--green);cursor:default}
+.btn-ghost{background:transparent;color:white;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border:2px solid rgba(255,255,255,.2);cursor:default}
+.white-frame{background:white;padding:24px;border-radius:2px}
+.white-frame img{width:100%;display:block}
+
+/* SCREENS */
+.screens-outer{background:#E1E1E1;padding:100px 0}
+.screens-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.hero-shot{background:white;padding:20px;margin-bottom:2px}
+.hero-shot img{width:100%;display:block}
+.page-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray2)}
+.page-card{background:white;overflow:hidden;border-top:2px solid transparent;transition:all .3s;cursor:default}
+.page-card:hover{border-top-color:var(--green);transform:translateY(-3px)}
+.page-card img{width:100%;display:block;transition:transform .4s ease}
+.page-card:hover img{transform:scale(1.02)}
+.pg-label{padding:16px 20px}
+.page-card .pg-num{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;color:var(--gray2);line-height:1;margin-bottom:2px}
+.page-card h4{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:4px}
+.page-card p{font-size:12px;color:var(--text2);line-height:1.5}
+.responsive-shot{background:transparent;padding:24px 0;margin-top:2px}
+.responsive-shot img{width:100%;display:block}
+@media(max-width:960px){.page-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* CONVERSION STRATEGY */
+.strategy-outer{background:white;padding:100px 0}
+.strategy-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--gray2);margin-bottom:52px}
+.method-box{background:white;padding:30px;text-align:center}
+.method-num{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:700;color:var(--green-dark);line-height:1;margin-bottom:8px}
+.method-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray3);margin-bottom:6px}
+.method-val{font-size:14px;color:var(--text2)}
+.strategy-list{display:flex;flex-direction:column;gap:2px;background:var(--gray2)}
+.strategy-item{background:white;padding:32px 40px;display:grid;grid-template-columns:160px 1fr 1fr 1fr;gap:28px;align-items:start;transition:background .2s}
+.strategy-item:hover{background:var(--gray)}
+.strategy-name{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--text);text-transform:uppercase;line-height:1.15;padding-top:4px}
+.s-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray3);margin-bottom:8px}
+.s-text{font-size:14px;color:var(--text);line-height:1.65;font-weight:500}
+.s-fix{font-size:14px;color:var(--green-dark);line-height:1.65}
+.s-text2{font-size:14px;color:var(--text2);line-height:1.65}
+
+/* OUTCOME */
+.outcome-outer{background:var(--gray);padding:100px 0}
+.outcome-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.outcome-lead{text-align:center;max-width:700px;margin:0 auto 64px}
+.outcome-lead p{font-size:18px;color:var(--text2);line-height:1.85}
+.outcome-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--gray2);max-width:760px;margin:0 auto 64px}
+.outcome-stats .stat{padding:22px 12px}
+.proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--gray2);align-items:stretch}
+.proto-card{background:white;padding:40px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.proto-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--green)}
+.proto-type{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--green-dark);margin-bottom:12px}
+.proto-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;color:var(--text);text-transform:uppercase;margin-bottom:14px;line-height:1}
+.proto-desc{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:24px}
+.proto-shot{background:var(--gray);padding:16px;margin-bottom:24px}
+.proto-shot img{width:100%;display:block}
+.proto-btn{display:inline-flex;align-self:flex-start;margin-top:auto;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--black);background:var(--green);padding:14px 26px;text-decoration:none;transition:background .2s}
+.proto-btn:hover{background:var(--green-mid)}
+
+/* FOOTER */
+.footer-cta{background:var(--black);padding:120px 60px;text-align:center;position:relative;overflow:hidden}
+.footer-bg{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);font-family:'Barlow Condensed',sans-serif;font-size:200px;font-weight:700;color:rgba(255,255,255,.015);white-space:nowrap;letter-spacing:.05em;pointer-events:none}
+.footer-cta h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,6vw,84px);font-weight:700;color:white;text-transform:uppercase;line-height:.95;margin-bottom:24px}
+.footer-cta h2 span{color:transparent;-webkit-text-stroke:2px var(--green)}
+.footer-cta p{font-size:16px;color:rgba(255,255,255,.32);margin-bottom:44px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.7}
+.footer-btn{display:inline-flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--black);background:var(--green);padding:18px 38px;text-decoration:none;transition:background .2s}
+.footer-btn:hover{background:var(--green-mid)}
+.footer-bottom{margin-top:64px;padding-top:28px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-copy{font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.1em}
+
+/* MOBILE */
+@media(max-width:960px){
+  header{padding:0 20px;height:56px}
+  nav{display:none}
+  .process-nav{top:56px}
+  .pnav-inner{padding:0 20px}
+  .hero-content{padding:90px 24px 60px}
+  .hero h1{font-size:clamp(48px,12vw,80px)}
+  .hero-scroll{display:none}
+  .wrap{padding:64px 24px}
+  .full-inner{padding:64px 24px}
+  .full-wrap{padding:64px 0}
+  .prob-inner{padding:64px 24px}
+  .ov-grid{grid-template-columns:1fr;gap:40px}
+  .prob-grid3{grid-template-columns:1fr}
+  .affected-grid{grid-template-columns:1fr}
+  .comp-table{display:block;overflow-x:auto}
+  .color-row{flex-wrap:wrap}
+  .color-swatch{min-width:45%}
+  .int-cols{grid-template-columns:1fr}
+  .insights-grid{grid-template-columns:1fr}
+  .goals-grid3{grid-template-columns:1fr}
+  .stage-grid{grid-template-columns:1fr}
+  .stage-arrow{display:none!important}
+  .ui-elements-grid{grid-template-columns:1fr}
+  .method-grid{grid-template-columns:1fr 1fr}
+  .strategy-item{grid-template-columns:1fr;gap:14px}
+  .proto-grid{grid-template-columns:1fr}
+  .outcome-stats{grid-template-columns:1fr 1fr}
+  .footer-cta{padding:80px 24px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .ds-inner{padding:64px 24px}
+  .screens-inner{padding:64px 24px}
+  .ideate-inner{padding:64px 24px}
+  .strategy-inner{padding:64px 24px}
+  .outcome-inner{padding:64px 24px}
+}
+@media(max-width:600px){
+  .hero h1{font-size:52px}
+  .page-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-link" href="../index.html">
+    <svg class="logo-img" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Yafex Studio">
+      <rect width="30" height="30" rx="8" fill="#c8f55a"/>
+      <g transform="translate(5,5)">
+        <path d="M3 15L10 4L17 15H3Z" fill="#0a0a0a" stroke="#0a0a0a" stroke-linejoin="round"/>
+        <circle cx="10" cy="15.5" r="1.5" fill="#0a0a0a"/>
+      </g>
+    </svg>
+    <span class="logo-name">Yafex Studio</span>
+  </a>
+  <nav>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#services">Experience</a>
+    <a href="../index.html#projects">Work</a>
+    <a href="../index.html#contact">Contact</a>
+    <a class="back-btn" href="../index.html#projects">← Portfolio</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-steam">
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+    <div class="steam-particle"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">UX / UI Case Study · Marketing Website</div>
+    <h1>DAILY<span class="outline">LOOP</span><br>WEBSITE<br>EXPERIENCE</h1>
+    <div class="hero-bar"></div>
+    <div class="hero-meta">
+      <div class="meta-item"><label>Role</label><span>UX · UI · Research</span></div>
+      <div class="meta-item"><label>Tools</label><span>Figma</span></div>
+      <div class="meta-item"><label>Duration</label><span>3 Weeks</span></div>
+      <div class="meta-item"><label>Platform</label><span>Responsive Website</span></div>
+      <div class="meta-item"><label>Year</label><span>2024</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</div>
+
+<!-- PROCESS NAV -->
+<nav class="process-nav" id="process-nav" style="transform:translateY(-100%);opacity:0;transition:transform .4s ease,opacity .4s ease;position:sticky;top:64px;z-index:90">
+  <div class="pnav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#research">Research</a>
+    <a href="#define">Define</a>
+    <a href="#structure">Structure</a>
+    <a href="#uidesign">UI Design</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#outcome">Outcome</a>
+  </div>
+</nav>
+
+<!-- OVERVIEW -->
+<div id="overview" class="wrap">
+  <div class="green-bar reveal"></div>
+  <span class="stag reveal">00 — Project Overview</span>
+  <div class="ov-grid">
+    <div class="ov-text reveal-left">
+      <h2>A marketing website built to turn visitors into users.</h2>
+      <p>DailyLoop's mobile app delivers the core habit-tracking experience — but before anyone opens the app, they need a reason to download it. This project is the website that makes that case: a clear, fast, conversion-focused introduction to the product.</p>
+      <p>Where the app is built for daily interaction, the website has one job — turn a first impression into a download. Every section, message, and CTA was designed to move a visitor from "what is this?" to "I want this."</p>
+      <div class="tag-row">
+        <span class="tag">Marketing Website</span>
+        <span class="tag">Conversion Design</span>
+        <span class="tag">Landing Page UX</span>
+        <span class="tag">Responsive Web</span>
+        <span class="tag">Design System</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><span class="num">5</span><div class="lbl">Pages Designed</div></div>
+        <div class="stat"><span class="num">3</span><div class="lbl">CTA Touchpoints</div></div>
+        <div class="stat"><span class="num">3wk</span><div class="lbl">Timeline</div></div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="ov-right">
+        <div class="ov-right-title">Project Details</div>
+        <div class="ov-kv">
+          <div class="ov-kv-row"><div class="ov-kv-label">Role</div><div class="ov-kv-val">UX Designer · UI Designer · Researcher</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Tools</div><div class="ov-kv-val">Figma</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Platform</div><div class="ov-kv-val">Responsive Marketing Website</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Primary Color</div><div class="ov-kv-val">#A8E100 — Growth &amp; Progress</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Typography</div><div class="ov-kv-val">Raleway — Clean, modern, highly readable</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Pages</div><div class="ov-kv-val">Landing · Features · Download · About · Pricing</div></div>
+          <div class="ov-kv-row"><div class="ov-kv-label">Key Sections</div><div class="ov-kv-val">Hero · Features · Previews · Testimonials · FAQ · CTA</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div id="problem" class="prob-section">
+  <div class="prob-inner">
+    <span class="stag reveal" style="color:rgba(168,225,0,.7)">01 — Problem Definition</span>
+    <h2 class="stitle reveal s1" style="color:white">How Do You Sell<br><span style="color:var(--green)">An Experience?</span></h2>
+    <p class="ssub reveal s2" style="color:rgba(255,255,255,.4)">The app gives users a hands-on experience — they can feel how it works. The website has no such advantage. It has to earn trust and communicate value through structure, visuals, and words alone, in the first few seconds.</p>
+
+    <div class="prob-grid3 reveal s1">
+      <div class="prob-card">
+        <h3>Background</h3>
+        <p>DailyLoop is a habit-tracking mobile app designed to help users build better routines, stay consistent, and track progress over time. While the app delivers the core experience, users still need a clear and engaging way to discover the product before deciding to download it.</p>
+      </div>
+      <div class="prob-card">
+        <h3>The Challenge</h3>
+        <p>Unlike the app, where users interact directly with features, the website must translate that experience into content, visuals, and structured navigation — communicating value quickly without the benefit of hands-on use.</p>
+      </div>
+      <div class="prob-card">
+        <h3>The Goal</h3>
+        <p>Design a marketing website that clearly presents DailyLoop's core features, communicates its value, and encourages action — showcasing the product, building trust, and creating a smooth path from discovery to download.</p>
+      </div>
+    </div>
+
+    <div class="affected-grid reveal s2">
+      <div class="aff-item">
+        <div class="aff-num">01</div>
+        <div class="aff-text"><strong style="color:rgba(255,255,255,.7)">Communicate value fast</strong> — visitors decide within seconds whether a product is worth exploring further.</div>
+      </div>
+      <div class="aff-item">
+        <div class="aff-num">02</div>
+        <div class="aff-text"><strong style="color:rgba(255,255,255,.7)">Make the product feel real</strong> — screenshots and previews must do the work that hands-on interaction does inside the app.</div>
+      </div>
+      <div class="aff-item">
+        <div class="aff-num">03</div>
+        <div class="aff-text"><strong style="color:rgba(255,255,255,.7)">Build trust before download</strong> — testimonials, polish, and clarity stand in for the confidence usually earned through usage.</div>
+      </div>
+      <div class="aff-item">
+        <div class="aff-num">04</div>
+        <div class="aff-text"><strong style="color:rgba(255,255,255,.7)">Guide without overwhelming</strong> — repeated CTAs should feel like natural next steps, not pressure tactics.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div id="research" class="full-wrap" style="background:white">
+  <div class="full-inner">
+    <span class="stag reveal">02 — Research &amp; Insights</span>
+    <h2 class="stitle reveal s1">Competitive<br><span>Analysis</span></h2>
+    <p class="ssub reveal s2">To understand how strong product websites convert, I reviewed marketing sites from NordVPN, Headspace, Duolingo, and Calm — focusing on feature presentation, CTA placement, and trust-building elements.</p>
+
+    <table class="comp-table reveal s1">
+      <thead>
+        <tr>
+          <th>Website</th>
+          <th>Target Audience</th>
+          <th>Strength</th>
+          <th>Weakness</th>
+          <th>Clear Hero</th>
+          <th>Strong CTAs</th>
+          <th>Previews</th>
+          <th>Trust Signals</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="comp-name-cell">
+              <img class="comp-logo-img" src="Images/logos/NordVPN.webp" alt="NordVPN logo">
+              <div class="comp-name-text">NordVPN</div>
+            </div>
+          </td>
+          <td>Privacy users</td>
+          <td>Strong trust and CTA strategy</td>
+          <td>Limited emotional engagement</td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-no">✕</span></td>
+          <td><span class="feat-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="comp-name-cell">
+              <img class="comp-logo-img" src="Images/logos/Headspace.jpeg" alt="Headspace logo">
+              <div class="comp-name-text">Headspace</div>
+            </div>
+          </td>
+          <td>Wellness users</td>
+          <td>Strong emotional connection</td>
+          <td>Less feature depth</td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-no">✕</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="comp-name-cell">
+              <img class="comp-logo-img" src="Images/logos/Duolingo.png" alt="Duolingo logo">
+              <div class="comp-name-text">Duolingo</div>
+            </div>
+          </td>
+          <td>Language learners</td>
+          <td>Clear product explanation</td>
+          <td>Weaker trust-building</td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-no">✕</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="comp-name-cell">
+              <img class="comp-logo-img framed" src="Images/logos/Calm.png" alt="Calm logo">
+              <div class="comp-name-text">Calm</div>
+            </div>
+          </td>
+          <td>Wellness users</td>
+          <td>Premium visual branding</td>
+          <td>Less conversion-focused</td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-no">✕</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-no">✕</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="comp-name-cell">
+              <div class="comp-logo-dl">DL</div>
+              <div class="comp-name-text" style="color:var(--green-dark)">DailyLoop ↗</div>
+            </div>
+          </td>
+          <td>Habit-builders, productivity seekers</td>
+          <td>Clear features + strong conversion design</td>
+          <td>New entrant — establishing trust</td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+          <td><span class="feat-yes">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="green-bar reveal"></div>
+    <span class="stag reveal">Key Insights From Research</span>
+    <div class="insights-grid reveal s1">
+      <div class="insight-card">
+        <h4>Seconds, Not Minutes</h4>
+        <p>Visitors make decisions quickly, so the product's value has to be obvious within the first few seconds of landing on the page.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Show, Don't Just Tell</h4>
+        <p>Visual previews of the product communicate features faster and more convincingly than text alone — screens do the explaining.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Trust Closes The Gap</h4>
+        <p>Testimonials, product highlights, and polish increase confidence before downloading — replacing trust that usage would normally build.</p>
+      </div>
+    </div>
+
+    <div class="int-block reveal s2">
+      <h3>Marketing Strategy</h3>
+      <div class="int-source">Unlike the mobile app, the website's main goal isn't interaction — it's conversion. The experience needs to capture attention, build trust, and drive action, so the structure and content were planned around that shift from the start.</div>
+      <div class="int-cols">
+        <div>
+          <h4>Research Focus</h4>
+          <ul class="int-list">
+            <li>Feature presentation — how products explain their value clearly</li>
+            <li>Call-to-action placement — how visitors are guided toward sign-up or download</li>
+            <li>Trust-building — how testimonials, visuals, and social proof are used</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Design Approach</h4>
+          <ul class="int-list">
+            <li>A strong hero section communicates value immediately</li>
+            <li>Feature sections explain how the app works, with clear visuals</li>
+            <li>Product previews make the experience feel real and tangible</li>
+            <li>Testimonials build credibility before the ask</li>
+            <li>Download CTAs placed strategically across the page</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEFINE -->
+<div id="define" class="full-wrap" style="background:var(--gray)">
+  <div class="full-inner">
+    <span class="stag reveal">03 — Define</span>
+    <h2 class="stitle reveal s1">Conversion<br><span>Goals</span></h2>
+    <p class="ssub reveal s2">To support product discovery and improve conversion, the website was designed around six clear goals — each shaping a different part of the page structure and content.</p>
+
+    <div class="goals-grid3 reveal s1">
+      <div class="goal-card">
+        <h4>Increase App Downloads</h4>
+        <p>Create clear, repeated call-to-action points that encourage visitors to download the app.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Build User Trust</h4>
+        <p>Use product previews, clear messaging, and testimonials to increase confidence in the product.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Explain Product Value</h4>
+        <p>Present features and benefits simply, so visitors quickly understand how DailyLoop helps them.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Improve User Engagement</h4>
+        <p>Create an engaging browsing experience that keeps visitors exploring the product and learning more.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Support Decision Making</h4>
+        <p>Provide enough information, visuals, and context to help visitors make a confident download decision.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Strengthen Brand Identity</h4>
+        <p>Carry DailyLoop's visual language from the app into the website for a consistent, recognizable brand.</p>
+      </div>
+    </div>
+
+    <span class="stag reveal">Key Features Map</span>
+    <p class="ssub reveal s1" style="margin-bottom:32px">To support these goals, the website was designed around key sections that help visitors understand the product, build trust, and take action.</p>
+    <div class="fmap reveal s2">
+      <div class="fmap-root">
+        <div class="fmap-root-node">DailyLoop Website<span>Key Features Map</span></div>
+      </div>
+      <div class="fmap-stem"></div>
+      <div class="fmap-cols">
+
+        <div class="fmap-col">
+          <div class="fmap-pillar">
+            <span class="fmap-pnum">01 — Understand</span>
+            <h4>Explain the Product</h4>
+          </div>
+          <div class="fmap-items">
+            <div class="fmap-item"><strong>Hero Section</strong><span>Clear headline and value proposition that explains what DailyLoop does at a glance.</span></div>
+            <div class="fmap-item"><strong>Feature Highlights</strong><span>Visual breakdown of core habit-tracking features and how they work.</span></div>
+            <div class="fmap-item"><strong>How It Works</strong><span>Step-by-step flow showing the journey from sign-up to building habits.</span></div>
+          </div>
+        </div>
+
+        <div class="fmap-col">
+          <div class="fmap-pillar">
+            <span class="fmap-pnum">02 — Trust</span>
+            <h4>Build Confidence</h4>
+          </div>
+          <div class="fmap-items">
+            <div class="fmap-item"><strong>App Previews</strong><span>Real product screenshots that show the interface and prove it's polished.</span></div>
+            <div class="fmap-item"><strong>Testimonials</strong><span>User stories and reviews that build credibility and social proof.</span></div>
+            <div class="fmap-item"><strong>Benefits & Outcomes</strong><span>Tangible results that help visitors picture the value for themselves.</span></div>
+          </div>
+        </div>
+
+        <div class="fmap-col">
+          <div class="fmap-pillar">
+            <span class="fmap-pnum">03 — Act</span>
+            <h4>Drive Downloads</h4>
+          </div>
+          <div class="fmap-items">
+            <div class="fmap-item"><strong>Primary CTA</strong><span>Repeated download buttons placed at every key decision point.</span></div>
+            <div class="fmap-item"><strong>App Store Links</strong><span>Direct routes to iOS and Android stores to remove friction.</span></div>
+            <div class="fmap-item"><strong>Final Call-to-Action</strong><span>Closing section that reinforces the value and prompts the download.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEBSITE STRUCTURE -->
+<div id="structure" class="ideate-outer">
+  <div class="ideate-inner">
+    <span class="stag reveal">04 — Website Structure</span>
+    <h2 class="stitle reveal s1">Information<br><span>Architecture</span></h2>
+
+    <div class="phase-block reveal s2">
+      <h3>Sitemap</h3>
+      <p>Content was organized into a clear hierarchy so visitors can move between product information, features, and download options without confusion.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 1080 658" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Space Grotesk',sans-serif"><rect x="435" y="14" width="210" height="42" fill="#A8E100"/><text x="540.0" y="39" text-anchor="middle" fill="#111a00" font-size="13" font-weight="700">LANDING PAGE</text><text x="540" y="11" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="600" letter-spacing="2">WEBSITE ROOT</text><line x1="540" y1="56" x2="540" y2="78" stroke="#7aaa00" stroke-width="2"/><line x1="120" y1="78" x2="960" y2="78" stroke="#b9c79a" stroke-width="1.5"/><line x1="120" y1="78" x2="120" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="45" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="120.0" y="112" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Hero Section</text><line x1="288" y1="78" x2="288" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="213" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="288.0" y="110" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Featured</text><text x="288.0" y="121" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Section</text><line x1="456" y1="78" x2="456" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="381" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="456.0" y="112" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">How it Works</text><line x1="624" y1="78" x2="624" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="549" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="624.0" y="110" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Special</text><text x="624.0" y="121" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">features</text><line x1="792" y1="78" x2="792" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="717" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="792.0" y="112" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Pricing Section</text><line x1="960" y1="78" x2="960" y2="92" stroke="#b9c79a" stroke-width="1.5"/><rect x="885" y="92" width="150" height="34" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="960.0" y="112" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Testimonials</text><line x1="540" y1="78" x2="540" y2="160" stroke="#7aaa00" stroke-width="2"/><line x1="159" y1="160" x2="921" y2="160" stroke="#7aaa00" stroke-width="2"/><line x1="159" y1="160" x2="159" y2="176" stroke="#7aaa00" stroke-width="2"/><rect x="44" y="176" width="230" height="42" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="159.0" y="201" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Features Page</text><line x1="64" y1="218" x2="64" y2="495" stroke="#7aaa00" stroke-width="1.5"/><line x1="64" y1="255" x2="78" y2="255" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="240" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="258" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Hero Section</text><line x1="64" y1="295" x2="78" y2="295" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="280" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="298" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Create Habit</text><line x1="64" y1="335" x2="78" y2="335" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="320" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="338" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Habit Detail</text><line x1="64" y1="375" x2="78" y2="375" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="360" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="378" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Notifications</text><line x1="64" y1="415" x2="78" y2="415" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="400" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="418" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Tracking</text><line x1="64" y1="455" x2="78" y2="455" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="440" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="458" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">CTA</text><line x1="64" y1="495" x2="78" y2="495" stroke="#7aaa00" stroke-width="1.5"/><rect x="78" y="480" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="176.0" y="498" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">FAQ</text><line x1="413" y1="160" x2="413" y2="176" stroke="#7aaa00" stroke-width="2"/><rect x="298" y="176" width="230" height="42" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="413.0" y="201" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Download Page</text><line x1="318" y1="218" x2="318" y2="535" stroke="#7aaa00" stroke-width="1.5"/><line x1="318" y1="255" x2="332" y2="255" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="240" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="258" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Hero Section</text><line x1="318" y1="295" x2="332" y2="295" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="280" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="296" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Platform</text><text x="430.0" y="307" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Availability</text><line x1="318" y1="335" x2="332" y2="335" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="320" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="338" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">App Usability</text><line x1="318" y1="375" x2="332" y2="375" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="360" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="378" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">What You Get</text><line x1="318" y1="415" x2="332" y2="415" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="400" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="418" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">App Screen</text><line x1="318" y1="455" x2="332" y2="455" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="440" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="458" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Social Proof</text><line x1="318" y1="495" x2="332" y2="495" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="480" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="498" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">CTA</text><line x1="318" y1="535" x2="332" y2="535" stroke="#7aaa00" stroke-width="1.5"/><rect x="332" y="520" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="430.0" y="538" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">FAQ</text><line x1="667" y1="160" x2="667" y2="176" stroke="#7aaa00" stroke-width="2"/><rect x="552" y="176" width="230" height="42" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="667.0" y="201" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">About Page</text><line x1="572" y1="218" x2="572" y2="575" stroke="#7aaa00" stroke-width="1.5"/><line x1="572" y1="255" x2="586" y2="255" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="240" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="258" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Hero Section</text><line x1="572" y1="295" x2="586" y2="295" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="280" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="298" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Origin Story</text><line x1="572" y1="335" x2="586" y2="335" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="320" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="338" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">App Speciality</text><line x1="572" y1="375" x2="586" y2="375" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="360" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="378" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">The Product</text><line x1="572" y1="415" x2="586" y2="415" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="400" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="418" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">AI Coach</text><line x1="572" y1="455" x2="586" y2="455" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="440" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="458" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Values</text><line x1="572" y1="495" x2="586" y2="495" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="480" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="498" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Who Use This</text><line x1="572" y1="535" x2="586" y2="535" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="520" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="538" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">CTA</text><line x1="572" y1="575" x2="586" y2="575" stroke="#7aaa00" stroke-width="1.5"/><rect x="586" y="560" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="684.0" y="578" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">FAQ</text><line x1="921" y1="160" x2="921" y2="176" stroke="#7aaa00" stroke-width="2"/><rect x="806" y="176" width="230" height="42" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="921.0" y="201" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Pricing Page</text><line x1="826" y1="218" x2="826" y2="415" stroke="#7aaa00" stroke-width="1.5"/><line x1="826" y1="255" x2="840" y2="255" stroke="#7aaa00" stroke-width="1.5"/><rect x="840" y="240" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="938.0" y="256" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Choose Your</text><text x="938.0" y="267" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Plan</text><line x1="826" y1="295" x2="840" y2="295" stroke="#7aaa00" stroke-width="1.5"/><rect x="840" y="280" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="938.0" y="296" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Feature</text><text x="938.0" y="307" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Comparison</text><line x1="826" y1="335" x2="840" y2="335" stroke="#7aaa00" stroke-width="1.5"/><rect x="840" y="320" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="938.0" y="338" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">Why Upgrade</text><line x1="826" y1="375" x2="840" y2="375" stroke="#7aaa00" stroke-width="1.5"/><rect x="840" y="360" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="938.0" y="378" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">CTA</text><line x1="826" y1="415" x2="840" y2="415" stroke="#7aaa00" stroke-width="1.5"/><rect x="840" y="400" width="196" height="30" fill="#f5f7f2" stroke="#d4dec0" stroke-width="1"/><text x="938.0" y="418" text-anchor="middle" fill="#5a6638" font-size="9" font-weight="400">FAQ</text><rect x="44" y="624" width="24" height="18" fill="#A8E100"/><text x="76" y="638" fill="#5a6638" font-size="11">Website root</text><rect x="220" y="624" width="24" height="18" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="252" y="638" fill="#5a6638" font-size="11">Primary page</text><rect x="400" y="624" width="24" height="18" fill="#f5f7f2" stroke="#d4dec0"/><text x="432" y="638" fill="#5a6638" font-size="11">Section / sub-screen</text></svg>
+      </div>
+    </div>
+
+    <div class="phase-block reveal s2">
+      <h3>User Flow</h3>
+      <p>The user flow maps how visitors move through the site — from discovering the product, to exploring features, to reaching the download action.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 1240 624" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Space Grotesk',sans-serif"><defs><marker id="cs4-arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9aa886"/></marker><marker id="cs4-alt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6f9e00"/></marker></defs><line x1="210" y1="75" x2="290" y2="75" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="460" y1="75" x2="540" y2="75" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="710" y1="75" x2="790" y2="75" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="875" y1="100" x2="875" y2="190" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="875" y1="240" x2="875" y2="330" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="960" y1="355" x2="1040" y2="355" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="1125" y1="380" x2="1125" y2="470" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="790" y1="355" x2="710" y2="355" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="540" y1="355" x2="460" y2="355" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="375" y1="380" x2="375" y2="470" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><polyline points="375,520 375,550 875,550 875,380" fill="none" stroke="#9aa886" stroke-width="2" marker-end="url(#cs4-arr)"/><line x1="375" y1="100" x2="375" y2="190" stroke="#6f9e00" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#cs4-alt)"/><line x1="290" y1="215" x2="210" y2="215" stroke="#6f9e00" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#cs4-alt)"/><polyline points="125,240 125,355 290,355" fill="none" stroke="#6f9e00" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#cs4-alt)"/><rect x="40" y="50" width="170" height="50" fill="#A8E100"/><text x="125.0" y="79" text-anchor="middle" fill="#111a00" font-size="12" font-weight="700">Start</text><rect x="290" y="50" width="170" height="50" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="375.0" y="79" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Landing Page</text><rect x="540" y="50" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="625.0" y="76" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Scroll to</text><text x="625.0" y="88" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Special</text><rect x="790" y="50" width="170" height="50" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="875.0" y="79" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Features Page</text><rect x="40" y="190" width="170" height="50" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="125.0" y="219" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">About Page</text><rect x="290" y="190" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="375.0" y="216" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Want to Know</text><text x="375.0" y="228" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">About App</text><rect x="790" y="190" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="875.0" y="216" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Scroll down to</text><text x="875.0" y="228" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">CTA</text><rect x="290" y="330" width="170" height="50" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="375.0" y="359" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Pricing Page</text><rect x="540" y="330" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="625.0" y="356" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Scroll to What</text><text x="625.0" y="368" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">You Get</text><rect x="790" y="330" width="170" height="50" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="875.0" y="359" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Download Page</text><rect x="1040" y="330" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="1125.0" y="356" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Download The</text><text x="1125.0" y="368" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">App</text><rect x="290" y="470" width="170" height="50" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="375.0" y="496" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Feature</text><text x="375.0" y="508" text-anchor="middle" fill="#6f9e00" font-size="10" font-weight="700">Comparison</text><rect x="1040" y="470" width="170" height="50" fill="#A8E100"/><text x="1125.0" y="499" text-anchor="middle" fill="#111a00" font-size="12" font-weight="700">End</text><rect x="40" y="590" width="24" height="18" fill="#A8E100"/><text x="72" y="604" fill="#5a6638" font-size="11">Start / End</text><rect x="230" y="590" width="24" height="18" fill="#111a00" stroke="#A8E100" stroke-width="1.5"/><text x="262" y="604" fill="#5a6638" font-size="11">Page / Section</text><rect x="440" y="590" width="24" height="18" fill="#fff" stroke="#7aaa00" stroke-width="2"/><text x="472" y="604" fill="#5a6638" font-size="11">User decision</text><line x1="650" y1="599" x2="695" y2="599" stroke="#6f9e00" stroke-width="2" stroke-dasharray="7 5"/><text x="702" y="604" fill="#5a6638" font-size="11">Alternative path</text></svg>
+      </div>
+    </div>
+
+    <div class="phase-block reveal s2">
+      <h3>Wireframes</h3>
+      <p>Wireframes established layout, content placement, and structure before moving into visual design — validating flow and hierarchy early.</p>
+      <div class="diagram-wrap">
+        <img src="https://framerusercontent.com/images/FMts26YMTKJSfUbopVle6KIFj8s.png" alt="Website wireframes" style="width:100%;display:block"/>
+      </div>
+    </div>
+
+    <span class="stag reveal" style="margin-top:24px;display:block">Layout Decision</span>
+    <p class="ssub reveal s1" style="margin-bottom:32px">The content strategy delivers the right information at the right moment — introducing the product, explaining its value, building trust, and encouraging action.</p>
+    <div class="stage-grid reveal s2">
+      <div class="stage-card">
+        <div class="stage-num">STAGE 01</div>
+        <h4>Capture Attention</h4>
+        <ul>
+          <li>Hero section communicates value immediately</li>
+          <li>Bold visuals introduce the product identity</li>
+        </ul>
+        <div class="stage-arrow">→</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">STAGE 02</div>
+        <h4>Build Interest</h4>
+        <ul>
+          <li>Feature sections explain benefits clearly</li>
+          <li>Product previews make the experience tangible</li>
+        </ul>
+        <div class="stage-arrow">→</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">STAGE 03</div>
+        <h4>Build Trust</h4>
+        <ul>
+          <li>Testimonials create social proof</li>
+          <li>FAQs reduce hesitation before download</li>
+        </ul>
+        <div class="stage-arrow">→</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">STAGE 04</div>
+        <h4>Drive Action</h4>
+        <ul>
+          <li>Download CTAs support conversion</li>
+          <li>Repeated touchpoints reduce friction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UI DESIGN / DESIGN SYSTEM -->
+<div id="uidesign" class="ds-outer">
+  <div class="ds-inner">
+    <span class="stag reveal" style="color:rgba(168,225,0,.7)">05 — UI Design</span>
+    <h2 class="stitle reveal s1" style="color:white">Visual<br><span style="color:var(--green)">Design</span></h2>
+    <p class="ssub reveal s2" style="color:rgba(255,255,255,.4)">The website's visual design was created to align with the DailyLoop app experience, keeping the product identity consistent across platforms — simple, clear, and built around a strong visual hierarchy.</p>
+
+    <div class="ds-block reveal s1">
+      <div class="ds-block-title">01 — Color Palette</div>
+      <p class="ds-desc">The website uses the same color palette as the mobile app to create a consistent product identity and a clear visual connection between platforms. The primary color remains Green (#A8E100) — growth, health, and progress.</p>
+      <div class="color-row">
+        <div class="color-swatch" style="background:#A8E100;flex:2">
+          <div class="cs-hex" style="color:#111a00">#A8E100</div>
+          <div class="cs-name" style="color:rgba(0,0,0,.5)">Primary Green · Growth</div>
+        </div>
+        <div class="color-swatch" style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08)">
+          <div class="cs-hex" style="color:#111a00">#FFFFFF</div>
+          <div class="cs-name" style="color:rgba(0,0,0,.4)">Background</div>
+        </div>
+        <div class="color-swatch" style="background:#000000">
+          <div class="cs-hex" style="color:white">#000000</div>
+          <div class="cs-name" style="color:rgba(255,255,255,.5)">Neutral</div>
+        </div>
+        <div class="color-swatch" style="background:#7aaa00">
+          <div class="cs-hex" style="color:white">#7AAA00</div>
+          <div class="cs-name" style="color:rgba(255,255,255,.7)">Green Dark</div>
+        </div>
+        <div class="color-swatch" style="background:#bef030">
+          <div class="cs-hex" style="color:#111a00">#BEF030</div>
+          <div class="cs-name" style="color:rgba(0,0,0,.4)">Green Light</div>
+        </div>
+        <div class="color-swatch" style="background:#f5f7f2;border:1px solid rgba(0,0,0,.06)">
+          <div class="cs-hex" style="color:#111a00">#F5F7F2</div>
+          <div class="cs-name" style="color:rgba(0,0,0,.4)">Surface</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-block reveal s2">
+      <div class="ds-block-title">02 — Typography</div>
+      <p class="ds-desc">The website uses <strong style="color:rgba(168,225,0,.9)">Raleway</strong> as its main typeface — clean, modern, and highly readable across devices. Bold headings paired with clear body text create strong hierarchy and easy scanning.</p>
+      <div style="background:#080a00;border:1px solid rgba(168,225,0,.1);padding:32px 36px">
+
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px">Font Name —
+          <span style="color:#A8E100;font-weight:600">Raleway</span>
+        </div>
+
+        <div style="height:1px;background:rgba(255,255,255,.07);margin-bottom:28px"></div>
+
+        <div style="margin-bottom:28px">
+          <div style="font-family:'Raleway',sans-serif;font-size:clamp(40px,8vw,84px);font-weight:800;color:white;line-height:1.05;letter-spacing:-.01em">H1 — Raleway Ex Bold 84px</div>
+        </div>
+
+        <div style="height:1px;background:rgba(255,255,255,.05);margin-bottom:0"></div>
+
+        <style>
+          .ts-row{display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+          .ts-row:last-child{border-bottom:none}
+          .ts-meta{font-family:'Space Grotesk',sans-serif;font-size:10px;color:rgba(255,255,255,.35);white-space:nowrap;min-width:200px}
+        </style>
+
+        <div class="ts-row">
+          <div class="ts-meta">H2 · Raleway Ex Bold 50px</div>
+          <div style="font-size:clamp(32px,5vw,50px);font-weight:800;color:white;font-family:'Raleway',sans-serif;line-height:1">H2 — Raleway Ex Bold 50px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">H3 · Raleway Bold 32px</div>
+          <div style="font-size:32px;font-weight:700;color:white;font-family:'Raleway',sans-serif;line-height:1">H3 — Raleway Bold 32px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">H4 · Raleway Ex Bold 28px</div>
+          <div style="font-size:28px;font-weight:800;color:white;font-family:'Raleway',sans-serif;line-height:1">H4 — Raleway Ex Bold 28px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">H5 · Raleway Bold 24px</div>
+          <div style="font-size:24px;font-weight:700;color:rgba(255,255,255,.9);font-family:'Raleway',sans-serif;line-height:1">H5 — Raleway Bold 24px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">H6 · Raleway Bold 20px</div>
+          <div style="font-size:20px;font-weight:700;color:rgba(255,255,255,.85);font-family:'Raleway',sans-serif;line-height:1">H6 — Raleway Bold 20px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">Title 1 · Raleway Semi Bold 18px</div>
+          <div style="font-size:18px;font-weight:600;color:rgba(255,255,255,.8);font-family:'Raleway',sans-serif;line-height:1">Title 1 — Raleway Semi Bold 18px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">Body 1 · Raleway Bold 16px</div>
+          <div style="font-size:16px;font-weight:700;color:rgba(255,255,255,.7);font-family:'Raleway',sans-serif;line-height:1">Body 1 — Raleway Bold 16px</div>
+        </div>
+        <div class="ts-row">
+          <div class="ts-meta">Body 2 · Raleway Medium 16px</div>
+          <div style="font-size:16px;font-weight:500;color:rgba(255,255,255,.55);font-family:'Raleway',sans-serif;line-height:1">Body 2 — Raleway Medium 16px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-block reveal s3">
+      <div class="ds-block-title">03 — UI Elements</div>
+      <p class="ds-desc">A consistent set of UI components carried the visual language across the website — buttons, navigation, cards, and download CTAs — all built from the same design tokens as the app.</p>
+      <div class="ui-elements-grid">
+        <div class="ui-el-box" style="padding:0;overflow:hidden"><img src="Images/ui-elements.png" alt="UI Elements" style="width:100%;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HIGH FIDELITY SCREENS -->
+<div class="screens-outer">
+  <div class="screens-inner">
+    <div class="green-bar reveal"></div>
+    <span class="stag reveal">High-Fidelity Pages</span>
+    <h2 class="stitle reveal s1">5 Pages<br><span>Designed</span></h2>
+    <p class="ssub reveal s2">The high-fidelity designs bring the website structure into a polished, conversion-focused experience — each page communicates DailyLoop's value clearly and guides visitors toward downloading the app.</p>
+
+    <div class="page-grid reveal s2">
+      <div class="page-card">
+        <img src="Images/pages/landing.png" alt="Landing page design"/>
+        <div class="pg-label">
+          <div class="pg-num">01</div>
+          <h4>Landing</h4>
+          <p>Introduces DailyLoop and drives first impressions with clear messaging and strong CTAs.</p>
+        </div>
+      </div>
+      <div class="page-card">
+        <img src="Images/pages/features.png" alt="Features page design"/>
+        <div class="pg-label">
+          <div class="pg-num">02</div>
+          <h4>Features</h4>
+          <p>Showcases the app's main features in a simple, easy-to-scan layout.</p>
+        </div>
+      </div>
+      <div class="page-card">
+        <img src="Images/pages/download.png" alt="Download page design"/>
+        <div class="pg-label">
+          <div class="pg-num">03</div>
+          <h4>Download</h4>
+          <p>Provides quick access to app downloads with clear, focused action points.</p>
+        </div>
+      </div>
+      <div class="page-card">
+        <img src="Images/pages/about.png" alt="About page design"/>
+        <div class="pg-label">
+          <div class="pg-num">04</div>
+          <h4>About</h4>
+          <p>Shares the product story and builds trust with visitors.</p>
+        </div>
+      </div>
+      <div class="page-card">
+        <img src="Images/pages/pricing.png" alt="Pricing page design"/>
+        <div class="pg-label">
+          <div class="pg-num">05</div>
+          <h4>Pricing</h4>
+          <p>Presents plans and premium options in a clear, structured way.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:60px">
+      <div class="green-bar reveal"></div>
+      <span class="stag reveal">Responsive Design</span>
+      <h2 class="stitle reveal s1" style="font-size:clamp(32px,4vw,52px);margin-bottom:24px">Built For Every<br><span>Screen</span></h2>
+      <p class="ssub reveal s2" style="margin-bottom:24px">The website works seamlessly across desktop and mobile, adapting layout while preserving content hierarchy, readability, and CTA visibility.</p>
+      <div class="responsive-shot reveal s1">
+        <img src="https://framerusercontent.com/images/M3srWXEkHrChR7dBth1eLUvJu78.png" alt="Responsive design across devices"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONVERSION STRATEGY -->
+<div id="strategy" class="strategy-outer">
+  <div class="strategy-inner">
+    <div class="green-bar reveal"></div>
+    <span class="stag reveal">06 — Conversion Strategy</span>
+    <h2 class="stitle reveal s1">Designed To<br><span>Convert</span></h2>
+    <p class="ssub reveal s2">Beyond visual design, every structural decision was made to reduce friction and guide visitors toward downloading the app — from CTA placement to trust signals to feature presentation.</p>
+
+    <div class="method-grid reveal s1">
+      <div class="method-box">
+        <div class="method-num">3</div>
+        <div class="method-label">CTA Placements</div>
+        <div class="method-val">Hero, features, and final section</div>
+      </div>
+      <div class="method-box">
+        <div class="method-num">5</div>
+        <div class="method-label">Pages Designed</div>
+        <div class="method-val">Landing · Features · Download · About · Pricing</div>
+      </div>
+      <div class="method-box">
+        <div class="method-num">4</div>
+        <div class="method-label">Trust Elements</div>
+        <div class="method-val">Previews, testimonials, highlights &amp; messaging</div>
+      </div>
+      <div class="method-box">
+        <div class="method-num">100%</div>
+        <div class="method-label">Responsive</div>
+        <div class="method-val">Consistent across desktop and mobile</div>
+      </div>
+    </div>
+
+    <div class="strategy-list reveal s2">
+      <div class="strategy-item">
+        <div class="strategy-name">CTA<br>Placement</div>
+        <div>
+          <div class="s-label">Challenge</div>
+          <div class="s-text">Visitors may be interested but lose momentum if the download action isn't immediately visible or easy to reach.</div>
+        </div>
+        <div>
+          <div class="s-label">Strategy</div>
+          <div class="s-text2">CTAs were placed across high-attention areas — the hero, feature highlights, and final section — instead of relying on one download block.</div>
+        </div>
+        <div>
+          <div class="s-label">Outcome</div>
+          <div class="s-fix">Multiple conversion points let users act whenever they're ready, reducing friction and increasing download opportunities.</div>
+        </div>
+      </div>
+      <div class="strategy-item">
+        <div class="strategy-name">Trust<br>Signals</div>
+        <div>
+          <div class="s-label">Challenge</div>
+          <div class="s-text">Before downloading, visitors need confidence that the product is reliable, useful, and worth their time.</div>
+        </div>
+        <div>
+          <div class="s-label">Strategy</div>
+          <div class="s-text2">The site integrates social proof — testimonials, product previews, and clear messaging that show the interface and real feedback.</div>
+        </div>
+        <div>
+          <div class="s-label">Outcome</div>
+          <div class="s-fix">Trust signals reduce uncertainty, strengthen credibility, and improve the likelihood of conversion.</div>
+        </div>
+      </div>
+      <div class="strategy-item">
+        <div class="strategy-name">Feature<br>Presentation</div>
+        <div>
+          <div class="s-label">Challenge</div>
+          <div class="s-text">Poorly explained or overly complex features can cause visitors to miss the product's value entirely.</div>
+        </div>
+        <div>
+          <div class="s-label">Strategy</div>
+          <div class="s-text2">Features were broken into focused sections supported by visuals and short explanations — easy to scan, easy to understand.</div>
+        </div>
+        <div>
+          <div class="s-label">Outcome</div>
+          <div class="s-fix">A clearer presentation helps visitors connect functionality with their needs, making the download decision easier.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div id="outcome" class="outcome-outer">
+  <div class="outcome-inner">
+    <div class="green-bar reveal"></div>
+    <span class="stag reveal">07 — Final Outcome</span>
+    <h2 class="stitle reveal s1">A Website Built<br><span>To Convert</span></h2>
+    <div class="outcome-lead reveal s2">
+      <p>The final DailyLoop website delivers a clean, modern, conversion-focused experience that supports the mobile app by presenting its value clearly and persuasively. Structured content, strong visual hierarchy, and strategic CTAs create a smooth journey from discovery to download — strengthening the connection between the brand and its users.</p>
+    </div>
+
+    <div class="outcome-stats reveal s1">
+      <div class="stat"><span class="num">5</span><div class="lbl">Pages Designed</div></div>
+      <div class="stat"><span class="num">3</span><div class="lbl">CTA Touchpoints</div></div>
+      <div class="stat"><span class="num">100%</span><div class="lbl">Responsive</div></div>
+      <div class="stat"><span class="num">3wk</span><div class="lbl">Timeline</div></div>
+    </div>
+
+    <div class="proto-grid reveal s2">
+      <div class="proto-card">
+        <div class="proto-type">Final Prototype · Desktop</div>
+        <div class="proto-title">Desktop<br>Experience</div>
+        <div class="proto-desc">A clean and easy-to-navigate desktop design that presents DailyLoop's full marketing experience across all five pages.</div>
+        <div class="proto-shot">
+          <img src="https://framerusercontent.com/images/nN8Ua8Dp6lxK8Hijj7lASvxcjw.png" alt="Desktop prototype preview"/>
+        </div>
+        <a class="proto-btn" href="https://www.figma.com/proto/JTZxC4RTqn3s8NisjaxkR3/Untitled?node-id=2722-1455&t=vWahOkuqyL6Cy0mC-1" target="_blank">View Full Prototype →</a>
+      </div>
+      <div class="proto-card">
+        <div class="proto-type">Final Prototype · Mobile</div>
+        <div class="proto-title">Mobile<br>Experience</div>
+        <div class="proto-desc">A simple, on-the-go version for quick access — preserving hierarchy, readability, and CTA visibility on smaller screens.</div>
+        <div class="proto-shot">
+          <img src="https://framerusercontent.com/images/jjGwfxLVPv1ayRWzsonu9TgIccs.png" alt="Mobile prototype preview"/>
+        </div>
+        <a class="proto-btn" href="https://www.figma.com/proto/JTZxC4RTqn3s8NisjaxkR3/Untitled?node-id=2730-57348&t=vWahOkuqyL6Cy0mC-1" target="_blank">View Full Prototype →</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a class="proto-btn reveal s3" href="https://www.figma.com/design/JTZxC4RTqn3s8NisjaxkR3/Untitled?node-id=2065-942" target="_blank">View Figma File →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-cta">
+  <div class="footer-bg">YAFEX</div>
+  <h2 class="reveal">Like What<br>You <span>See?</span></h2>
+  <p class="reveal s1">Explore more work on my portfolio or get in touch — I'd love to collaborate on your next project.</p>
+  <a class="footer-btn reveal s2" href="../index.html">← Back to Portfolio</a>
+  <div class="footer-bottom reveal s3">
+    <div class="footer-copy">© 2024 Yafex Studio · UI/UX Design</div>
+    <div class="footer-copy">DailyLoop — Website Case Study · Case Study No.02</div>
+  </div>
+</div>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -48px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+
+const processNav = document.getElementById('process-nav');
+const overviewSection = document.getElementById('overview');
+const navShowObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      processNav.classList.add('visible');
+    } else {
+      const rect = overviewSection.getBoundingClientRect();
+      if (rect.top > 0) {
+        processNav.classList.remove('visible');
+      }
+    }
+  });
+}, { threshold: 0.01, rootMargin: '0px 0px 0px 0px' });
+navShowObs.observe(overviewSection);
+
+const navLinks = document.querySelectorAll('.pnav-inner a');
+['overview','problem','research','define','structure','uidesign','strategy','outcome'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector('.pnav-inner a[href="#' + id + '"]');
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2 }).observe(el);
+});
+</script>
+</body>
+</html>
