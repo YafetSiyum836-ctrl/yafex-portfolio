@@ -1350,9 +1350,9 @@
     setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 4500);
   }
 
-  // ── Form submit with validation + Formspree
-  // ⚠️ SETUP: Go to formspree.io → sign up with yafetsiyum836@gmail.com
-  //           → New Form → copy your Form ID → replace YOUR_FORM_ID below
+  // ── Form submit with validation + FormSubmit (sends to yafetsiyum836@gmail.com)
+  // No account needed. On the FIRST submission, FormSubmit emails that address a
+  // one-time confirmation link — click it once and every later submission is delivered.
   async function handleSubmit() {
     const name    = document.getElementById('f-name');
     const email   = document.getElementById('f-email');
@@ -1391,13 +1391,16 @@
     btn.textContent = 'Sending…';
 
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      const res = await fetch('https://formsubmit.co/ajax/yafetsiyum836@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           name: name.value.trim(),
           email: email.value.trim(),
-          message: message.value.trim()
+          message: message.value.trim(),
+          _subject: 'New portfolio inquiry from ' + name.value.trim(),
+          _template: 'table',
+          _captcha: 'false'
         })
       });
       if (res.ok) {
